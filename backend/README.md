@@ -2,7 +2,7 @@
 
 API do sistema EstéticaPro (clínica de estética). Node.js + TypeScript + Express + Prisma + PostgreSQL.
 
-Escopo atual: esqueleto de deploy — autenticação (registro/login com JWT) e healthcheck (incluindo checagem de conexão com o banco). As entidades de negócio (clientes, agendamentos, tratamentos, etc.) ainda serão adicionadas.
+Cobre autenticação (JWT) e as entidades principais da clínica: clientes, profissionais, tratamentos e agendamentos (com checagem de conflito de horário por profissional) e um endpoint de resumo para o dashboard.
 
 ## Rodando localmente
 
@@ -11,16 +11,24 @@ cp .env.example .env
 docker compose up -d          # sobe o Postgres local
 npm install
 npm run prisma:migrate        # cria as tabelas
+npm run prisma:seed           # popula dados de demonstração
 npm run dev                   # http://localhost:5000
 ```
 
-Endpoints disponíveis:
+Login de demonstração criado pelo seed: `admin@esteticapro.com` / `esteticapro123`.
+
+Endpoints disponíveis (todos sob `/api`, exceto `/health`, exigem `Authorization: Bearer <token>`):
 
 - `GET /health` — healthcheck simples
 - `GET /health/db` — healthcheck com checagem de conexão ao Postgres
 - `POST /api/auth/register` — `{ name, email, password }`
 - `POST /api/auth/login` — `{ email, password }`
-- `GET /api/auth/me` — requer `Authorization: Bearer <token>`
+- `GET /api/auth/me`
+- `GET|POST /api/clients`, `GET|PUT|DELETE /api/clients/:id` — `?search=` filtra por nome/email/telefone
+- `GET|POST /api/professionals`, `GET|PUT|DELETE /api/professionals/:id` — `?active=true` filtra ativos
+- `GET|POST /api/treatments`, `GET|PUT|DELETE /api/treatments/:id` — `?active=true` filtra ativos
+- `GET|POST /api/appointments`, `GET|PUT|DELETE /api/appointments/:id` — filtros `?professionalId=&clientId=&status=&from=&to=`. Criação/edição rejeita com `409` se o profissional já tiver outro agendamento no mesmo intervalo.
+- `GET /api/dashboard/summary` — total de clientes, agendamentos de hoje, faturamento do mês (agendamentos `COMPLETED`) e próximos agendamentos
 
 ## Build de produção
 
@@ -51,6 +59,7 @@ Este serviço escuta na porta **5000** dentro do container.
 4. Nas configurações de rede/domínio do serviço no EasyPanel, configure a **porta do container como `5000`** (é a porta que o Express escuta) e associe o domínio/subdomínio desejado.
 5. O container roda `prisma migrate deploy` automaticamente antes de iniciar o servidor, aplicando as migrations pendentes no banco configurado — não precisa rodar migration manualmente.
 6. Depois do deploy, valide acessando `https://<seu-dominio>/health` e `https://<seu-dominio>/health/db` (o segundo confirma que a conexão com o Postgres está funcionando).
+7. (Opcional, recomendado para demonstração) Popule dados de exemplo rodando `npm run prisma:seed` **de dentro do terminal/console do serviço `clinica-api` no EasyPanel** (ele tem acesso à rede interna onde o Postgres está). Cria um usuário `admin@esteticapro.com` / `esteticapro123`, profissionais, tratamentos, clientes e agendamentos de exemplo.
 
 ## Estrutura
 

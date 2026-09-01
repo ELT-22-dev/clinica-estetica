@@ -24,3 +24,72 @@ model User {
 
   @@map("users")
 }
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+  COMPLETED
+  NO_SHOW
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String?
+  email     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@map("clients")
+}
+
+model Professional {
+  id        String   @id @default(uuid())
+  name      String
+  specialty String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@map("professionals")
+}
+
+model Treatment {
+  id              String   @id @default(uuid())
+  name            String
+  durationMinutes Int
+  price           Float
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  appointments Appointment[]
+
+  @@map("treatments")
+}
+
+model Appointment {
+  id             String            @id @default(uuid())
+  clientId       String
+  client         Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  professionalId String
+  professional   Professional      @relation(fields: [professionalId], references: [id], onDelete: Restrict)
+  treatmentId    String
+  treatment      Treatment         @relation(fields: [treatmentId], references: [id], onDelete: Restrict)
+  room           String?
+  startsAt       DateTime
+  endsAt         DateTime
+  status         AppointmentStatus @default(PENDING)
+  notes          String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([professionalId, startsAt])
+  @@map("appointments")
+}
