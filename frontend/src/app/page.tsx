@@ -47,14 +47,8 @@ export default function CoverPage() {
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       <div className="relative flex min-h-[45vh] flex-1 flex-col justify-between overflow-hidden bg-ink px-8 py-8 text-white sm:px-12 sm:py-10 lg:min-h-screen">
-        <Image
-          src="/tratamento.png"
-          alt=""
-          fill
-          priority
-          className="object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/40" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(169,128,63,.35),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(232,201,120,.25),transparent_50%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/90 to-ink/70" />
 
         <div className="relative flex items-center gap-2">
           <div className="h-9 w-9 overflow-hidden rounded-xl bg-white shadow">
