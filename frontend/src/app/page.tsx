@@ -139,19 +139,42 @@ export default function CoverPage() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl border border-border shadow-2xl shadow-black/10">
-            <Image
-              src="/tratamento.png"
-              alt="Atendimento na clínica"
-              width={640}
-              height={480}
-              className="h-full w-full object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-            <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/90 p-4 backdrop-blur">
-              <p className="text-sm font-semibold text-ink">Agenda de hoje</p>
-              <p className="text-xs text-muted">Conflitos de horário bloqueados automaticamente pela API</p>
+          <div className="rounded-3xl border border-border bg-gradient-to-br from-white to-[#FBF4E6] p-6 shadow-2xl shadow-black/10">
+            <div className="mb-4 flex items-center justify-between">
+              <p className="font-serif text-lg">Agenda de hoje</p>
+              <span className="rounded-full bg-[#EDF7F0] px-2.5 py-1 text-xs font-semibold text-[#1B7A45]">Ao vivo</span>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {[
+                { time: "09:00", name: "Ana Costa", service: "Botox", status: "Confirmado" },
+                { time: "10:30", name: "Maria Oliveira", service: "Limpeza de pele", status: "Confirmado" },
+                { time: "13:00", name: "Juliana Reis", service: "Microagulhamento", status: "Pendente" },
+              ].map((row) => (
+                <div key={row.time} className="flex items-center gap-3 rounded-xl border border-border/70 bg-white px-3 py-2.5">
+                  <span className="font-serif text-base w-12 flex-none">{row.time}</span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold">{row.name}</p>
+                    <p className="truncate text-xs text-muted">{row.service}</p>
+                  </div>
+                  <span
+                    className={`flex-none rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                      row.status === "Confirmado" ? "bg-[#EDF7F0] text-[#1B7A45]" : "bg-[#F8F1E2] text-gold-dark"
+                    }`}
+                  >
+                    {row.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4">
+              <div>
+                <p className="text-xs text-muted">Agendamentos hoje</p>
+                <p className="font-serif text-2xl">14</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted">Faturamento do mês</p>
+                <p className="font-serif text-2xl">R$ 68.420</p>
+              </div>
             </div>
           </div>
         </section>
