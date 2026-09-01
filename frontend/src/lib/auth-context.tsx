@@ -6,10 +6,13 @@ import { clearToken, getToken, setToken } from "./api";
 import { fetchMe, login as loginRequest } from "./resources";
 import type { User } from "./types";
 
+export const DEMO_CREDENTIALS = { email: "admin@esteticapro.com", password: "esteticapro123" };
+
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginDemo: () => Promise<void>;
   logout: () => void;
 }
 
@@ -40,13 +43,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/dashboard");
   }
 
+  function loginDemo() {
+    return login(DEMO_CREDENTIALS.email, DEMO_CREDENTIALS.password);
+  }
+
   function logout() {
     clearToken();
     setUser(null);
-    router.push("/login");
+    router.push("/");
   }
 
-  return <AuthContext.Provider value={{ user, loading, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, loading, login, loginDemo, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
