@@ -31,3 +31,12 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction) {
     throw new HttpError(401, "Invalid or expired token");
   }
 }
+
+export function requireRole(...roles: AuthPayload["role"][]) {
+  return function roleGuard(req: Request, _res: Response, next: NextFunction) {
+    if (!req.user || !roles.includes(req.user.role)) {
+      throw new HttpError(403, "Insufficient permissions");
+    }
+    next();
+  };
+}

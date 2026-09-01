@@ -21,7 +21,7 @@ Endpoints disponíveis (todos sob `/api`, exceto `/health`, exigem `Authorizatio
 
 - `GET /health` — healthcheck simples
 - `GET /health/db` — healthcheck com checagem de conexão ao Postgres
-- `POST /api/auth/register` — `{ name, email, password }`
+- `POST /api/auth/register` — `{ name, email, password }` — **requer um token de ADMIN autenticado** (cria contas novas, que nascem como `ADMIN` por padrão; nunca é público, ver seção Segurança)
 - `POST /api/auth/login` — `{ email, password }`
 - `GET /api/auth/me`
 - `GET|POST /api/clients`, `GET|PUT|DELETE /api/clients/:id` — `?search=` filtra por nome/email/telefone
@@ -60,6 +60,17 @@ Este serviço escuta na porta **5000** dentro do container.
 5. O container roda `prisma migrate deploy` automaticamente antes de iniciar o servidor, aplicando as migrations pendentes no banco configurado — não precisa rodar migration manualmente.
 6. Depois do deploy, valide acessando `https://<seu-dominio>/health` e `https://<seu-dominio>/health/db` (o segundo confirma que a conexão com o Postgres está funcionando).
 7. (Opcional, recomendado para demonstração) Popule dados de exemplo rodando `npm run prisma:seed` **de dentro do terminal/console do serviço `clinica-api` no EasyPanel** (ele tem acesso à rede interna onde o Postgres está). Cria um usuário `admin@esteticapro.com` / `esteticapro123`, profissionais, tratamentos, clientes e agendamentos de exemplo.
+
+## Segurança
+
+- **`/api/auth/register` não é público.** Como `User.role` nasce `ADMIN` por padrão no schema, deixar o registro aberto permitiria que qualquer pessoa na internet criasse uma conta admin e tivesse acesso total aos dados (clientes, agendamentos etc.) de uma API publicamente exposta. A rota exige `requireAuth` + `requireRole("ADMIN")` — só um admin já logado pode provisionar novas contas. O usuário demo do seed continua sendo o único ponto de entrada para quem não tem token.
+- **Rate limiting em memória** (`src/middleware/rate-limit.middleware.ts`, sem dependência externa) protege contra força bruta/credential stuffing:
+  - `POST /api/auth/login` e `/register`: 20 requisições / 15 min por IP.
+  - Todo o restante de `/api/*`: 300 requisições / 15 min por IP (proteção geral contra abuso, já que a API fica pública como demo de portfólio).
+  - Funciona por instância única (não distribuído). Se o serviço rodar com múltiplas réplicas, migrar para um limiter com backend compartilhado (ex: Redis).
+- **`app.set("trust proxy", 1)`** é necessário porque o EasyPanel roda a app atrás de um proxy reverso — sem isso, `req.ip` seria sempre o IP do proxy e o rate limit por IP não funcionaria corretamente.
+- Senhas com `bcryptjs` (custo 10), JWT assinado com `JWT_SECRET` obrigatório (o boot falha se a env var não existir — nunca há um "secret" default inseguro), `helmet()` para headers HTTP, corpo JSON limitado a 1 MB, e todo input validado com `zod` antes de tocar o banco (Prisma parametriza as queries, então não há risco de SQL injection).
+- **CORS**: `CORS_ORIGIN` deve listar exatamente os domínios do frontend (produção + previews da Vercel), separados por vírgula. Não configurar como `*` em produção — o app já não trata `*` como wildcard real (a lib `cors` compara a origem literalmente contra a lista), então deixar sem configurar em produção bloquearia o frontend em vez de abrir demais; o efeito prático de esquecer essa env var é "CORS bloqueando tudo", não "CORS aberto para qualquer origem".
 
 ## Estrutura
 
