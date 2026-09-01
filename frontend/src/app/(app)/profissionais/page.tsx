@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Avatar } from "@/components/ui/Avatar";
 import { Modal } from "@/components/ui/Modal";
 import { ApiError } from "@/lib/api";
 import { createProfessional, deleteProfessional, fetchProfessionals, updateProfessional } from "@/lib/resources";
@@ -58,58 +59,43 @@ export default function ProfissionaisPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-serif text-3xl">Profissionais</h1>
-          <p className="text-muted">{items.length} cadastrados</p>
-        </div>
-        <button
-          onClick={openCreate}
-          className="rounded-xl bg-gradient-to-b from-gold-light to-gold-dark px-4 py-2 font-semibold text-ink"
-        >
-          + Novo profissional
+    <>
+      <div className="flex items-center gap-3">
+        <span className="text-[13.5px] font-medium text-muted">{items.length} cadastrados</span>
+        <button onClick={openCreate} className="btn-gold ml-auto">
+          Novo profissional
         </button>
       </div>
 
       {error && <p className="text-red-600">{error}</p>}
 
-      <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-sm">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-border bg-[#FBF8F3] text-muted">
-            <tr>
-              <th className="px-4 py-3">Nome</th>
-              <th className="px-4 py-3">Especialidade</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id} className="border-b border-border/60 last:border-0">
-                <td className="px-4 py-3 font-medium">{item.name}</td>
-                <td className="px-4 py-3 text-muted">{item.specialty ?? "—"}</td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      item.active ? "bg-[#EDF7F0] text-[#1B7A45]" : "bg-[#F1EAE0] text-muted"
-                    }`}
-                  >
-                    {item.active ? "Ativo" : "Inativo"}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <button onClick={() => openEdit(item)} className="mr-3 font-semibold text-gold-dark">
-                    Editar
-                  </button>
-                  <button onClick={() => handleDelete(item)} className="font-semibold text-red-600">
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <div key={item.id} className="card flex flex-col gap-3.5 p-5 hover:border-[#D9C9AC]">
+            <div className="flex items-center gap-3">
+              <Avatar name={item.name} size={40} />
+              <div className="min-w-0">
+                <div className="truncate text-[15.5px] font-semibold">{item.name}</div>
+                <div className="truncate text-[13.5px] text-muted">{item.specialty ?? "—"}</div>
+              </div>
+            </div>
+            <span
+              className={`w-fit rounded-full px-2.5 py-1 text-xs font-bold ${
+                item.active ? "bg-[#EDF7F0] text-[#1B7A45]" : "bg-[#F1EAE0] text-muted"
+              }`}
+            >
+              {item.active ? "Ativo" : "Inativo"}
+            </span>
+            <div className="mt-1 flex justify-end gap-3 border-t border-border-soft pt-3 text-sm font-semibold">
+              <button onClick={() => openEdit(item)} className="text-gold-dark">
+                Editar
+              </button>
+              <button onClick={() => handleDelete(item)} className="text-red-600">
+                Excluir
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {showForm && (
@@ -137,12 +123,12 @@ export default function ProfissionaisPage() {
               Ativo
             </label>
             {error && <p className="text-sm text-red-600">{error}</p>}
-            <button type="submit" className="mt-2 rounded-lg bg-gold-dark px-4 py-2 font-semibold text-white">
+            <button type="submit" className="btn-gold mt-2">
               Salvar
             </button>
           </form>
         </Modal>
       )}
-    </div>
+    </>
   );
 }

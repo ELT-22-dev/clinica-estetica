@@ -11,3 +11,31 @@ body {
 * {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e0d6c6;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-border bg-white shadow-card;
+  }
+
+  .pill {
+    @apply rounded-full text-xs font-bold;
+  }
+
+  .btn-gold {
+    @apply rounded-xl bg-gradient-to-b from-gold-light to-gold-dark px-4 py-2 font-bold text-[#33291A] shadow-soft;
+  }
+}

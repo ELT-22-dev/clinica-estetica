@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Avatar } from "@/components/ui/Avatar";
 import { Modal } from "@/components/ui/Modal";
 import { StatusBadge } from "@/components/ui/Badge";
 import { ApiError } from "@/lib/api";
@@ -112,85 +113,70 @@ export default function AgendamentosPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-serif text-3xl">Agendamentos</h1>
-          <p className="text-muted">{appointments.length} no total</p>
+    <>
+      <div className="card flex flex-col gap-3.5 p-5">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-[13.5px] font-medium text-muted">{appointments.length} no total</span>
+          <button
+            onClick={openCreate}
+            disabled={!clients.length || !professionals.length || !treatments.length}
+            className="btn-gold ml-auto disabled:opacity-50"
+          >
+            + Novo agendamento
+          </button>
         </div>
-        <button
-          onClick={openCreate}
-          disabled={!clients.length || !professionals.length || !treatments.length}
-          className="rounded-xl bg-gradient-to-b from-gold-light to-gold-dark px-4 py-2 font-semibold text-ink disabled:opacity-50"
-        >
-          + Novo agendamento
-        </button>
-      </div>
 
-      {(!clients.length || !professionals.length || !treatments.length) && (
-        <p className="text-sm text-muted">
-          Cadastre ao menos um cliente, um profissional e um tratamento antes de criar agendamentos.
-        </p>
-      )}
+        {(!clients.length || !professionals.length || !treatments.length) && (
+          <p className="text-sm text-muted">
+            Cadastre ao menos um cliente, um profissional e um tratamento antes de criar agendamentos.
+          </p>
+        )}
 
-      {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-red-600">{error}</p>}
 
-      <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-sm">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-border bg-[#FBF8F3] text-muted">
-            <tr>
-              <th className="px-4 py-3">Data/hora</th>
-              <th className="px-4 py-3">Cliente</th>
-              <th className="px-4 py-3">Profissional</th>
-              <th className="px-4 py-3">Tratamento</th>
-              <th className="px-4 py-3">Sala</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {appointments.length === 0 && (
-              <tr>
-                <td colSpan={7} className="px-4 py-6 text-center text-muted">
-                  Nenhum agendamento cadastrado.
-                </td>
-              </tr>
-            )}
-            {appointments.map((a) => (
-              <tr key={a.id} className="border-b border-border/60 last:border-0">
-                <td className="px-4 py-3 font-medium">{dateTime.format(new Date(a.startsAt))}</td>
-                <td className="px-4 py-3">{a.client.name}</td>
-                <td className="px-4 py-3 text-muted">{a.professional.name}</td>
-                <td className="px-4 py-3 text-muted">{a.treatment.name}</td>
-                <td className="px-4 py-3 text-muted">{a.room ?? "—"}</td>
-                <td className="px-4 py-3">
-                  <select
-                    value={a.status}
-                    onChange={(e) => handleStatusChange(a, e.target.value as AppointmentStatus)}
-                    className="rounded-lg border border-border bg-white px-2 py-1 text-xs"
-                  >
-                    {statusOptions.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="ml-2 hidden sm:inline">
-                    <StatusBadge status={a.status} />
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <button onClick={() => openEdit(a)} className="mr-3 font-semibold text-gold-dark">
-                    Editar
-                  </button>
-                  <button onClick={() => handleDelete(a)} className="font-semibold text-red-600">
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {appointments.length === 0 && <p className="py-6 text-center text-muted">Nenhum agendamento cadastrado.</p>}
+
+        <div className="flex flex-col gap-2.5">
+          {appointments.map((a) => (
+            <div
+              key={a.id}
+              className="flex flex-wrap items-center gap-3.5 rounded-2xl border border-border-soft px-4 py-3 shadow-soft"
+            >
+              <div className="w-14 flex-none whitespace-nowrap font-serif text-[21px]">
+                {dateTime.format(new Date(a.startsAt))}
+              </div>
+              <Avatar name={a.client.name} />
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-[15.5px] font-semibold">{a.client.name}</div>
+                <div className="truncate text-[13.5px] text-muted">
+                  {a.treatment.name} · {a.room ?? "Sala não definida"} · {a.professional.name}
+                </div>
+              </div>
+              <select
+                value={a.status}
+                onChange={(e) => handleStatusChange(a, e.target.value as AppointmentStatus)}
+                className="rounded-lg border border-border bg-white px-2 py-1.5 text-xs font-semibold"
+              >
+                {statusOptions.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+              <span className="hidden sm:inline">
+                <StatusBadge status={a.status} />
+              </span>
+              <div className="flex gap-3 text-sm font-semibold">
+                <button onClick={() => openEdit(a)} className="text-gold-dark">
+                  Editar
+                </button>
+                <button onClick={() => handleDelete(a)} className="text-red-600">
+                  Excluir
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {showForm && (
@@ -274,12 +260,12 @@ export default function AgendamentosPage() {
 
             {error && <p className="text-sm text-red-600">{error}</p>}
 
-            <button type="submit" className="mt-2 rounded-lg bg-gold-dark px-4 py-2 font-semibold text-white">
+            <button type="submit" className="btn-gold mt-2">
               Salvar
             </button>
           </form>
         </Modal>
       )}
-    </div>
+    </>
   );
 }

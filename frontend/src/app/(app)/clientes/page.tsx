@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Avatar } from "@/components/ui/Avatar";
 import { Modal } from "@/components/ui/Modal";
 import { ApiError } from "@/lib/api";
 import { createClient, deleteClient, fetchClients, updateClient } from "@/lib/resources";
@@ -64,67 +65,67 @@ export default function ClientesPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="font-serif text-3xl">Clientes</h1>
-          <p className="text-muted">{clients.length} cadastrados</p>
+    <>
+      <div className="card overflow-hidden">
+        <div className="flex flex-wrap items-center gap-3 border-b border-border-soft p-4">
+          <div className="flex min-w-[240px] max-w-[380px] flex-1 items-center gap-2.5 rounded-xl border border-border bg-[#FDFBF7] px-3.5 py-2.5 shadow-soft">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A5998A" strokeWidth="1.8" strokeLinecap="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-3.5-3.5"></path>
+            </svg>
+            <input
+              placeholder="Buscar por nome, e-mail ou telefone"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                load(e.target.value);
+              }}
+              className="w-full border-0 bg-transparent text-[14.5px] outline-none"
+            />
+          </div>
+          <span className="text-[13.5px] font-medium text-muted">{clients.length} cadastrados</span>
+          <button onClick={openCreate} className="btn-gold ml-auto">
+            Nova cliente
+          </button>
         </div>
-        <button
-          onClick={openCreate}
-          className="rounded-xl bg-gradient-to-b from-gold-light to-gold-dark px-4 py-2 font-semibold text-ink"
-        >
-          + Novo cliente
-        </button>
-      </div>
 
-      <input
-        placeholder="Buscar por nome, e-mail ou telefone"
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          load(e.target.value);
-        }}
-        className="w-full max-w-sm rounded-xl border border-border bg-white px-3 py-2 outline-none focus:border-gold"
-      />
+        {error && <p className="p-4 text-red-600">{error}</p>}
 
-      {error && <p className="text-red-600">{error}</p>}
+        <div className="hidden grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)_minmax(0,1fr)_120px] bg-[#FCFAF6] px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-[#A5998A] sm:grid">
+          <span>Cliente</span>
+          <span>E-mail</span>
+          <span>Cadastro</span>
+          <span />
+        </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-border bg-white shadow-sm">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-border bg-[#FBF8F3] text-muted">
-            <tr>
-              <th className="px-4 py-3">Nome</th>
-              <th className="px-4 py-3">Telefone</th>
-              <th className="px-4 py-3">E-mail</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {!loading && clients.length === 0 && (
-              <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-muted">
-                  Nenhum cliente encontrado.
-                </td>
-              </tr>
-            )}
-            {clients.map((client) => (
-              <tr key={client.id} className="border-b border-border/60 last:border-0">
-                <td className="px-4 py-3 font-medium">{client.name}</td>
-                <td className="px-4 py-3 text-muted">{client.phone ?? "—"}</td>
-                <td className="px-4 py-3 text-muted">{client.email ?? "—"}</td>
-                <td className="px-4 py-3 text-right">
-                  <button onClick={() => openEdit(client)} className="mr-3 font-semibold text-gold-dark">
-                    Editar
-                  </button>
-                  <button onClick={() => handleDelete(client)} className="font-semibold text-red-600">
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {!loading && clients.length === 0 && <p className="p-6 text-center text-muted">Nenhum cliente encontrado.</p>}
+
+        {clients.map((client) => (
+          <div
+            key={client.id}
+            className="grid grid-cols-1 items-center gap-2 border-b border-border-soft/70 px-5 py-3.5 last:border-0 hover:bg-[#FDFBF7] sm:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)_minmax(0,1fr)_120px]"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <Avatar name={client.name} />
+              <div className="min-w-0">
+                <div className="truncate text-[15.5px] font-semibold">{client.name}</div>
+                <div className="text-[13.5px] text-muted">{client.phone ?? "—"}</div>
+              </div>
+            </div>
+            <span className="min-w-0 truncate text-[14.5px] text-[#4A3F33]">{client.email ?? "—"}</span>
+            <span className="min-w-0 truncate text-[14.5px] text-muted">
+              {new Date(client.createdAt).toLocaleDateString("pt-BR")}
+            </span>
+            <div className="flex justify-end gap-3 text-right text-sm font-semibold">
+              <button onClick={() => openEdit(client)} className="text-gold-dark">
+                Editar
+              </button>
+              <button onClick={() => handleDelete(client)} className="text-red-600">
+                Excluir
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {showForm && (
@@ -157,12 +158,12 @@ export default function ClientesPage() {
               className="rounded-lg border border-border px-3 py-2 outline-none focus:border-gold"
             />
             {error && <p className="text-sm text-red-600">{error}</p>}
-            <button type="submit" className="mt-2 rounded-lg bg-gold-dark px-4 py-2 font-semibold text-white">
+            <button type="submit" className="btn-gold mt-2">
               Salvar
             </button>
           </form>
         </Modal>
       )}
-    </div>
+    </>
   );
 }

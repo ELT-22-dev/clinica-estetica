@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Header } from "@/components/Header";
 import { Sidebar } from "@/components/Sidebar";
 import { useAuth } from "@/lib/auth-context";
 
@@ -22,7 +23,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen bg-cream">
       <Sidebar />
-      <main className="flex-1 min-w-0 p-8">{children}</main>
+      <main className="flex min-w-0 flex-1 flex-col">
+        <Header />
+        <div className="flex flex-col gap-6 p-8">{children}</div>
+      </main>
     </div>
   );
 }
