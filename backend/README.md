@@ -38,7 +38,7 @@ npm start
    - `JWT_SECRET` — um valor aleatório e seguro
    - `JWT_EXPIRES_IN` — ex. `7d`
    - `PORT` — `3000` (ou a porta que o EasyPanel espera)
-   - `CORS_ORIGIN` — domínio(s) do frontend, separados por vírgula
+   - `CORS_ORIGIN` — domínio(s) do frontend na Vercel, separados por vírgula (ex: `https://seu-app.vercel.app`). Inclua também o domínio de preview da Vercel se for testar deploys de PR por lá.
 4. O container roda `prisma migrate deploy` automaticamente antes de iniciar o servidor, aplicando as migrations pendentes no banco configurado.
 5. Exponha a porta `3000` do serviço e associe o domínio/subdomínio desejado.
 
