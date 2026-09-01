@@ -11,7 +11,7 @@ cp .env.example .env
 docker compose up -d          # sobe o Postgres local
 npm install
 npm run prisma:migrate        # cria as tabelas
-npm run dev                   # http://localhost:3000
+npm run dev                   # http://localhost:5000
 ```
 
 Endpoints disponíveis:
@@ -31,16 +31,26 @@ npm start
 
 ## Deploy no EasyPanel
 
-1. No EasyPanel, crie um serviço **Postgres** no projeto (ou use um já existente) e anote a connection string interna (ex: `postgresql://user:pass@postgres:5432/clinica_estetica`).
-2. Crie um serviço de app a partir deste repositório (pasta `backend/`), tipo **Dockerfile** — o EasyPanel vai buildar usando o `Dockerfile` desta pasta.
+Este serviço escuta na porta **5000** dentro do container.
+
+1. **Banco de dados**: se você já tem um Postgres compartilhado entre projetos no EasyPanel (ex: serviço `postgres-shared`), **não reutilize o banco de outro app** — crie um banco dedicado para este projeto:
+   - Abra o serviço Postgres compartilhado no EasyPanel e use a aba de terminal/console dele (ou um client como Adminer/psql apontando pro host interno) para rodar:
+     ```sql
+     CREATE DATABASE clinica_estetica;
+     ```
+   - Monte a `DATABASE_URL` reaproveitando host/usuário/senha do serviço compartilhado, só trocando o nome do banco no final, por exemplo:
+     `postgresql://postgres:<senha>@<host-interno-do-postgres>:5432/clinica_estetica?sslmode=disable`
+   - Se preferir isolar totalmente, crie um serviço **Postgres** novo dedicado a este projeto em vez de usar o compartilhado.
+2. Crie um serviço de app a partir deste repositório, apontando o **build context/root para a pasta `backend/`**, tipo de build **Dockerfile** — o EasyPanel vai buildar usando o `Dockerfile` desta pasta.
 3. Configure as variáveis de ambiente do serviço:
-   - `DATABASE_URL` — connection string do Postgres criado no passo 1
+   - `DATABASE_URL` — a connection string montada no passo 1 (banco dedicado, nunca compartilhado com outro app)
    - `JWT_SECRET` — um valor aleatório e seguro
    - `JWT_EXPIRES_IN` — ex. `7d`
-   - `PORT` — `3000` (ou a porta que o EasyPanel espera)
+   - `PORT` — `5000`
    - `CORS_ORIGIN` — domínio(s) do frontend na Vercel, separados por vírgula (ex: `https://seu-app.vercel.app`). Inclua também o domínio de preview da Vercel se for testar deploys de PR por lá.
-4. O container roda `prisma migrate deploy` automaticamente antes de iniciar o servidor, aplicando as migrations pendentes no banco configurado.
-5. Exponha a porta `3000` do serviço e associe o domínio/subdomínio desejado.
+4. Nas configurações de rede/domínio do serviço no EasyPanel, configure a **porta do container como `5000`** (é a porta que o Express escuta) e associe o domínio/subdomínio desejado.
+5. O container roda `prisma migrate deploy` automaticamente antes de iniciar o servidor, aplicando as migrations pendentes no banco configurado — não precisa rodar migration manualmente.
+6. Depois do deploy, valide acessando `https://<seu-dominio>/health` e `https://<seu-dominio>/health/db` (o segundo confirma que a conexão com o Postgres está funcionando).
 
 ## Estrutura
 
