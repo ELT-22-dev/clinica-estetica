@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  html, body { margin:0; padding:0; background:#F6F2EC; overflow-x:hidden; }
+  * { box-sizing:border-box; }
+  ::-webkit-scrollbar { width:8px; height:8px; }
+  ::-webkit-scrollbar-thumb { background:#E0D6C6; border-radius:8px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  a { color:#A9803F; text-decoration:none; }
+  a:hover { color:#8A6529; text-decoration:underline; }
+  @keyframes eddyPulse { 0%,100% { opacity:.45; transform:scale(1);} 50% { opacity:.9; transform:scale(1.12);} }
+</style>
+</helmet>
+
+<div style="position:fixed; inset:0; z-index:0; background-image:url('./assets/tratamento.png'); background-size:cover; background-position:52% 30%; filter:blur(3px) saturate(.8)"></div>
+<div style="position:fixed; inset:0; z-index:0; background:linear-gradient(112deg, rgba(246,242,236,.97) 0%, rgba(246,242,236,.94) 38%, rgba(249,243,233,.86) 72%, rgba(240,229,212,.8) 100%)"></div>
+
+<div style="position:relative; z-index:1; display:flex; min-height:100vh; font-family:'Plus Jakarta Sans',system-ui,sans-serif; color:#211C18; -webkit-font-smoothing:antialiased">
+
+  <aside style="width:{{ navW }}; flex:none; background:rgba(255,253,250,.82); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-right:1px solid rgba(234,225,211,.9); box-shadow:14px 0 40px -28px rgba(74,54,28,.45); display:flex; flex-direction:column; padding:20px 14px; gap:26px; position:sticky; top:0; height:100vh; z-index:2">
+    <div style="display:flex; align-items:center; gap:10px; padding:0 6px; height:38px">
+      <div style="width:36px; height:36px; flex:none; border-radius:12px; background:#fff; overflow:hidden; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(74,54,28,.08), 0 8px 18px -8px rgba(120,60,110,.45)">
+        <img src="./assets/logo-spa.png" alt="Logo" style="width:100%; height:100%; object-fit:cover; display:block">
+      </div>
+      <span style="display:{{ labelDisp }}; font-family:'Instrument Serif',serif; white-space:nowrap; font-size:23px; letter-spacing:.2px; white-space:nowrap">Estética<span style="color:#A9803F">Pro</span></span>
+    </div>
+
+    <nav style="display:flex; flex-direction:column; gap:3px">
+      <button onClick="{{ goDashboard }}" title="Dashboard" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.dashboard.bg }}; color:{{ a.dashboard.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="3" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="14" width="7" height="7" rx="2"></rect><rect x="3" y="14" width="7" height="7" rx="2"></rect></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Dashboard</span>
+      </button>
+      <button onClick="{{ goAgenda }}" title="Agendamentos" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.agenda.bg }}; color:{{ a.agenda.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="3" y="4" width="18" height="17" rx="3"></rect><path d="M3 10h18M8 2v4M16 2v4"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Agendamentos</span>
+      </button>
+      <button onClick="{{ goClientes }}" title="Clientes" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.clientes.bg }}; color:{{ a.clientes.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Clientes</span>
+      </button>
+      <button onClick="{{ goWhats }}" title="WhatsApp" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.whats.bg }}; color:{{ a.whats.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l1.9-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">WhatsApp</span>
+        <span style="display:{{ labelDisp }}; margin-left:auto; background:#1FA855; color:#fff; font-size:12.5px; font-weight:700; padding:1px 7px; border-radius:20px">4</span>
+      </button>
+      <button onClick="{{ goIA }}" title="Central de IA" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.ia.bg }}; color:{{ a.ia.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Central de IA</span>
+      </button>
+
+      <div style="height:1px; background:#EFE7DA; margin:9px 8px"></div>
+
+      <button onClick="{{ goFinanceiro }}" title="Financeiro" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.financeiro.bg }}; color:{{ a.financeiro.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><rect x="2" y="5" width="20" height="15" rx="3"></rect><path d="M2 10h20"></path><circle cx="17.5" cy="15" r="1.3"></circle></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Financeiro</span>
+      </button>
+      <button onClick="{{ goTratamentos }}" title="Tratamentos" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.tratamentos.bg }}; color:{{ a.tratamentos.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M12 3s6 6.2 6 10.2A6 6 0 0 1 6 13.2C6 9.2 12 3 12 3z"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Tratamentos</span>
+      </button>
+      <button onClick="{{ goRelatorios }}" title="Relatórios" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.relatorios.bg }}; color:{{ a.relatorios.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Relatórios</span>
+      </button>
+      <button onClick="{{ goConfig }}" title="Configurações" style="display:flex; align-items:center; gap:11px; width:100%; padding:10px 11px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:15.5px; font-weight:500; text-align:left; background:{{ a.config.bg }}; color:{{ a.config.fg }}" style-hover="background:#F4EEE3">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><circle cx="12" cy="12" r="3.2"></circle><path d="M19.1 14.9a1.5 1.5 0 0 0 .3 1.7l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.5 1.5 0 0 0-2.6 1.1v.2a2 2 0 1 1-4 0v-.1a1.5 1.5 0 0 0-2.6-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.5 1.5 0 0 0-1-2.6H3.4a2 2 0 1 1 0-4h.1a1.5 1.5 0 0 0 1-2.6l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.5 1.5 0 0 0 2.6-1V3.4a2 2 0 1 1 4 0v.1a1.5 1.5 0 0 0 2.6 1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.5 1.5 0 0 0 1 2.6h.2a2 2 0 1 1 0 4h-.1a1.5 1.5 0 0 0-1.4.9z"></path></svg>
+        <span style="display:{{ labelDisp }}; white-space:nowrap">Configurações</span>
+      </button>
+    </nav>
+
+    <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px">
+      <div style="display:{{ cardDisp }}; flex-direction:column; gap:8px; padding:14px; border-radius:14px; background:linear-gradient(160deg,#FBF4E6,#F5EAD6); border:1px solid #EDDFC4; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="width:7px; height:7px; border-radius:50%; background:#1FA855; animation:eddyPulse 2.4s ease-in-out infinite"></span>
+          <span style="font-size:13.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#8A6529">Eddy IA ativo</span>
+        </div>
+        <p style="margin:0; font-size:14px; line-height:1.45; color:#6E6156">Respondendo no WhatsApp e preenchendo a agenda enquanto você atende.</p>
+      </div>
+      <button onClick="{{ toggleNav }}" style="display:flex; align-items:center; justify-content:center; gap:8px; padding:9px; border:1px solid #EAE1D3; background:#fff; border-radius:11px; cursor:pointer; font:inherit; font-size:14px; font-weight:600; color:#8A7F72; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC; color:#A9803F">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="{{ chevron }}"></path></svg>
+        <span style="display:{{ labelDisp }}">Recolher menu</span>
+      </button>
+    </div>
+  </aside>
+
+  <main style="flex:1; min-width:0; display:flex; flex-direction:column">
+
+    <header style="display:flex; align-items:center; gap:18px; padding:22px 32px; border-bottom:1px solid rgba(234,225,211,.85); background:rgba(255,253,250,.8); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:0 18px 40px -34px rgba(74,54,28,.5); position:sticky; top:0; z-index:20">
+      <div style="min-width:0">
+        <h1 style="margin:0; font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px; font-weight:400; line-height:1.15; letter-spacing:-.01em">{{ pageTitle }} <em style="color:#A9803F">{{ pageAccent }}</em></h1>
+        <p style="margin:3px 0 0; font-size:14.5px; color:#8A7F72">{{ pageSub }}</p>
+      </div>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:12px">
+        <div style="display:flex; align-items:center; gap:9px; padding:8px 14px; border-radius:12px; background:#F1F8F3; border:1px solid #D5EADC; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+          <span style="width:7px; height:7px; border-radius:50%; background:#1FA855; animation:eddyPulse 2.4s ease-in-out infinite"></span>
+          <span style="font-size:14px; font-weight:600; color:#1B7A45">WhatsApp conectado</span>
+        </div>
+        <button style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border:1px solid #EAE1D3; background:#fff; border-radius:12px; cursor:pointer; color:#6E6156; position:relative; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC; color:#A9803F">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+          <span style="position:absolute; top:8px; right:9px; width:7px; height:7px; border-radius:50%; background:#C4564C; border:1.5px solid #fff"></span>
+        </button>
+        <div style="display:flex; align-items:center; gap:10px; padding:5px 14px 5px 5px; border:1px solid #EAE1D3; background:#fff; border-radius:40px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+          <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(150deg,#E4C88C,#A9803F); color:#FFFDF7; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; letter-spacing:.03em">SM</div>
+          <div style="line-height:1.2">
+            <div style="font-size:14.5px; font-weight:600">Dra. Sofia Martins</div>
+            <div style="font-size:13px; color:#8A7F72">Administradora</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div style="padding:28px 32px 48px; display:flex; flex-direction:column; gap:22px">
+
+      <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:22px">
+
+        <div style="position:relative; border-radius:22px; overflow:hidden; border:1px solid rgba(234,225,211,.9); min-height:212px; display:flex; align-items:center; box-shadow:0 2px 4px rgba(74,54,28,.06), 0 18px 36px -14px rgba(74,54,28,.24), 0 44px 80px -40px rgba(74,54,28,.34)">
+          <img src="./assets/tratamento.png" alt="Atendimento na clínica" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:56% 34%">
+          <div style="position:absolute; inset:0; background:linear-gradient(96deg, rgba(38,28,18,.86) 0%, rgba(48,34,20,.7) 42%, rgba(60,42,24,.12) 78%, rgba(60,42,24,0) 100%)"></div>
+          <div style="position:relative; padding:30px 34px; max-width:600px; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; gap:9px; align-self:flex-start; padding:6px 12px 6px 8px; border-radius:30px; background:rgba(255,253,247,.16); border:1px solid rgba(255,253,247,.28); backdrop-filter:blur(6px)">
+              <span style="width:7px; height:7px; border-radius:50%; background:#6FE3A0; animation:eddyPulse 2.4s ease-in-out infinite"></span>
+              <span style="font-size:13px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#F7EEDC">Eddy IA · turno de hoje</span>
+            </div>
+            <h2 style="margin:0; font-family:'Instrument Serif',serif; font-weight:400; font-size:35px; line-height:1.16; color:#FFFCF4; text-wrap:pretty">Bom dia, Dra. Sofia. <em style="color:#E8C978">14 atendimentos</em> na casa hoje.</h2>
+            <p style="margin:0; font-size:15px; line-height:1.5; color:rgba(255,250,240,.82); max-width:440px">A IA já confirmou 9 clientes no WhatsApp, remarcou 2 e abriu 1 encaixe às 15h30. Restam 3 confirmações em risco.</p>
+            <div style="display:flex; gap:10px; margin-top:4px">
+              <button onClick="{{ goWhats }}" style="padding:10px 18px; border:0; border-radius:11px; cursor:pointer; font:inherit; font-size:14.5px; font-weight:700; color:#2A1E10; background:linear-gradient(150deg,#F0DCA8,#C9A96A); box-shadow:0 8px 18px -8px rgba(0,0,0,.55)" style-hover="filter:brightness(1.06)">Ver conversas</button>
+              <button onClick="{{ goAgenda }}" style="padding:10px 18px; border:1px solid rgba(255,253,247,.34); border-radius:11px; cursor:pointer; font:inherit; font-size:14.5px; font-weight:600; color:#FFF8EA; background:rgba(255,253,247,.12); backdrop-filter:blur(6px)" style-hover="background:rgba(255,253,247,.22)">Abrir agenda</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap">
+              <span style="min-width:0; flex:1 1 auto; font-size:14px; font-weight:600; color:#8A7F72">Faturamento do mês</span>
+              <span style="flex:0 1 auto; white-space:nowrap; font-size:13px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:3px 8px; border-radius:20px">+14%</span>
+            </div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:36px; line-height:1.15">R$ 68.420</div>
+            <div style="font-size:13.5px; color:#8A7F72">Meta de agosto: R$ 80.000 · 86%</div>
+            <div style="height:5px; border-radius:6px; background:#F1EAE0; overflow:hidden"><div style="width:86%; height:100%; background:linear-gradient(90deg,#D9B87A,#A9803F)"></div></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap">
+              <span style="min-width:0; flex:1 1 auto; font-size:14px; font-weight:600; color:#8A7F72">Agendamentos hoje</span>
+              <span style="flex:0 1 auto; white-space:nowrap; font-size:13px; font-weight:700; color:#8A6529; background:#F8F1E2; padding:3px 8px; border-radius:20px">3 salas</span>
+            </div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:36px; line-height:1.15">14</div>
+            <div style="font-size:13.5px; color:#8A7F72">9 confirmados · 4 aguardando · 1 encaixe da IA</div>
+            <div style="display:flex; gap:4px"><div style="flex:9; height:5px; border-radius:6px; background:#1FA855"></div><div style="flex:4; height:5px; border-radius:6px; background:#E8C978"></div><div style="flex:1; height:5px; border-radius:6px; background:#A9803F"></div></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap">
+              <span style="min-width:0; flex:1 1 auto; font-size:14px; font-weight:600; color:#8A7F72">Ocupação da agenda</span>
+              <span style="flex:0 1 auto; white-space:nowrap; font-size:13px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:3px 8px; border-radius:20px">+9 pts</span>
+            </div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:36px; line-height:1.15">82%</div>
+            <div style="font-size:13.5px; color:#8A7F72">6h30 livres nesta semana</div>
+            <div style="height:5px; border-radius:6px; background:#F1EAE0; overflow:hidden"><div style="width:82%; height:100%; background:linear-gradient(90deg,#D9B87A,#A9803F)"></div></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap">
+              <span style="min-width:0; flex:1 1 auto; font-size:14px; font-weight:600; color:#8A7F72">Risco de no-show</span>
+              <span style="flex:0 1 auto; white-space:nowrap; font-size:13px; font-weight:700; color:#B04A40; background:#FBEDEB; padding:3px 8px; border-radius:20px">Atenção</span>
+            </div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:36px; line-height:1.15">3</div>
+            <div style="font-size:13.5px; color:#8A7F72">Clientes sem confirmar há mais de 24h</div>
+            <button style="align-self:flex-start; padding:6px 12px; border-radius:9px; border:1px solid #EAE1D3; background:#FDFBF7; font:inherit; font-size:13.5px; font-weight:600; color:#8A6529; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Deixar a IA confirmar</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:16px; align-items:start">
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:18px">
+            <div style="display:flex; align-items:center; justify-content:space-between">
+              <h2 style="margin:0; font-size:17.5px; font-weight:700">Agenda de hoje</h2>
+              <button onClick="{{ goAgenda }}" style="border:0; background:transparent; font:inherit; font-size:14.5px; font-weight:600; color:#A9803F; cursor:pointer">Ver semana completa</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px">
+              <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)" style-hover="border-color:#D9C9AC; background:#FEFCF8">
+                <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:21px; width:52px; flex:none">09:00</div>
+                <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">AC</div>
+                <div style="min-width:0; flex:1">
+                  <div style="font-size:15.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Ana Costa</div>
+                  <div style="font-size:13.5px; color:#8A7F72; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Preenchimento labial · Sala 2 · Dra. Sofia</div>
+                </div>
+                <span style="flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:4px 9px; border-radius:20px">Confirmado</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)" style-hover="border-color:#D9C9AC; background:#FEFCF8">
+                <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:21px; width:52px; flex:none">10:30</div>
+                <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">MO</div>
+                <div style="min-width:0; flex:1">
+                  <div style="font-size:15.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Maria Oliveira</div>
+                  <div style="font-size:13.5px; color:#8A7F72; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Toxina botulínica · Sala 1 · Dra. Sofia</div>
+                </div>
+                <span style="flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:4px 9px; border-radius:20px">Confirmado</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border:1px solid #EDDFC4; border-radius:14px; background:linear-gradient(120deg,#FDF8EE,#FBF3E3); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+                <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:21px; width:52px; flex:none">13:00</div>
+                <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#F6EEDD; color:#8A6529; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">JR</div>
+                <div style="min-width:0; flex:1">
+                  <div style="font-size:15.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Juliana Reis</div>
+                  <div style="font-size:13.5px; color:#8A7F72; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Limpeza de pele profunda · Sala 3 · Carla</div>
+                </div>
+                <span style="flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:700; color:#8A6529; background:#F6EEDD; padding:4px 9px; border-radius:20px">Encaixe da IA</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)" style-hover="border-color:#D9C9AC; background:#FEFCF8">
+                <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:21px; width:52px; flex:none">15:00</div>
+                <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#F5EDE8; color:#8A6752; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">CS</div>
+                <div style="min-width:0; flex:1">
+                  <div style="font-size:15.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Camila Souza</div>
+                  <div style="font-size:13.5px; color:#8A7F72; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Microagulhamento · Sala 2 · Carla</div>
+                </div>
+                <span style="flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:700; color:#B04A40; background:#FBEDEB; padding:4px 9px; border-radius:20px">Sem confirmar</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)" style-hover="border-color:#D9C9AC; background:#FEFCF8">
+                <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:21px; width:52px; flex:none">17:30</div>
+                <div style="width:34px; height:34px; flex:none; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">PL</div>
+                <div style="min-width:0; flex:1">
+                  <div style="font-size:15.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Patrícia Lima</div>
+                  <div style="font-size:13.5px; color:#8A7F72; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Avaliação facial · Sala 1 · Dra. Sofia</div>
+                </div>
+                <span style="flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:4px 9px; border-radius:20px">Confirmado</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <div style="border:1px solid #EDDFC4; border-radius:18px; padding:20px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+              <div style="display:flex; align-items:center; gap:9px">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg>
+                <h2 style="margin:0; font-size:16.5px; font-weight:700; color:#5C4A2E">Eddy sugere</h2>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:10px">
+                <div style="background:rgba(255,255,255,.75); border:1px solid #EFE3CC; border-radius:13px; padding:13px 14px; display:flex; flex-direction:column; gap:9px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+                  <p style="margin:0; font-size:14.5px; line-height:1.5; color:#4A3F33">Quinta tem <strong>2h30 livres</strong> na Sala 3. Tenho 6 clientes na lista de espera de limpeza de pele.</p>
+                  <div style="display:flex; gap:8px">
+                    <button style="padding:6px 12px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer">Convidar pelo WhatsApp</button>
+                    <button style="padding:6px 12px; border:1px solid #E4D6BC; border-radius:9px; background:transparent; font:inherit; font-size:13.5px; font-weight:600; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">Depois</button>
+                  </div>
+                </div>
+                <div style="background:rgba(255,255,255,.75); border:1px solid #EFE3CC; border-radius:13px; padding:13px 14px; display:flex; flex-direction:column; gap:9px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+                  <p style="margin:0; font-size:14.5px; line-height:1.5; color:#4A3F33">Camila Souza tem <strong>68% de risco de faltar</strong> às 15h — histórico de 2 faltas e não leu o lembrete.</p>
+                  <div style="display:flex; gap:8px">
+                    <button style="padding:6px 12px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer">Ligar via IA</button>
+                    <button style="padding:6px 12px; border:1px solid #E4D6BC; border-radius:9px; background:transparent; font:inherit; font-size:13.5px; font-weight:600; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">Ignorar</button>
+                  </div>
+                </div>
+                <div style="background:rgba(255,255,255,.75); border:1px solid #EFE3CC; border-radius:13px; padding:13px 14px; display:flex; flex-direction:column; gap:9px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+                  <p style="margin:0; font-size:14.5px; line-height:1.5; color:#4A3F33"><strong>23 clientes</strong> não voltam há 90 dias. Posso disparar uma campanha de reativação com 15% off em limpeza.</p>
+                  <div style="display:flex; gap:8px">
+                    <button style="padding:6px 12px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer">Revisar campanha</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:16px">
+              <h2 style="margin:0; font-size:16.5px; font-weight:700">Receita por semana</h2>
+              <div style="display:flex; align-items:flex-end; gap:12px; height:120px">
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px"><div style="width:100%; height:58%; border-radius:8px 8px 4px 4px; background:#F0E6D4"></div><span style="font-size:12.5px; color:#8A7F72">S1</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px"><div style="width:100%; height:71%; border-radius:8px 8px 4px 4px; background:#E7D6B6"></div><span style="font-size:12.5px; color:#8A7F72">S2</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px"><div style="width:100%; height:64%; border-radius:8px 8px 4px 4px; background:#EFE3CC"></div><span style="font-size:12.5px; color:#8A7F72">S3</span></div>
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:8px"><div style="width:100%; height:92%; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,#D9B87A,#A9803F)"></div><span style="font-size:12.5px; font-weight:700; color:#8A6529">S4</span></div>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:13.5px; color:#8A7F72; border-top:1px solid #F1EAE0; padding-top:12px">
+                <span>Ticket médio</span><strong style="color:#211C18">R$ 640</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isAgenda }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:16px; align-items:start">
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:18px; min-width:0">
+          <div style="display:flex; align-items:flex-end; gap:14px; flex-wrap:wrap">
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600; color:#8A7F72">Profissional
+              <select style="font:inherit; font-size:14.5px; color:#211C18; padding:9px 12px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; min-width:170px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><option>Todos</option><option>Dra. Sofia Martins</option><option>Carla Nogueira</option><option>Bruno Tavares</option></select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px; font-size:13.5px; font-weight:600; color:#8A7F72">Sala
+              <select style="font:inherit; font-size:14.5px; color:#211C18; padding:9px 12px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; min-width:130px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><option>Todas</option><option>Sala 1</option><option>Sala 2</option><option>Sala 3</option></select>
+            </label>
+            <div style="display:flex; align-items:center; gap:6px; margin-left:auto">
+              <button style="width:34px; height:34px; border:1px solid #EAE1D3; background:#fff; border-radius:10px; cursor:pointer; color:#6E6156; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button>
+              <span style="font-size:14.5px; font-weight:600; padding:0 6px">25 – 31 Ago</span>
+              <button style="width:34px; height:34px; border:1px solid #EAE1D3; background:#fff; border-radius:10px; cursor:pointer; color:#6E6156; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button>
+              <button style="margin-left:8px; padding:9px 15px; border:0; border-radius:11px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:7px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Novo agendamento</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:52px repeat(7,minmax(0,1fr)); gap:8px">
+            <div></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px">Seg <span style="color:#8A7F72; font-weight:500">25</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px">Ter <span style="color:#8A7F72; font-weight:500">26</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px; color:#8A6529">Qua <span style="font-weight:500">27</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px">Qui <span style="color:#8A7F72; font-weight:500">28</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px">Sex <span style="color:#8A7F72; font-weight:500">29</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px">Sáb <span style="color:#8A7F72; font-weight:500">30</span></div>
+            <div style="text-align:center; font-size:14px; font-weight:700; padding-bottom:2px; color:#B5AA9C">Dom <span style="font-weight:500">31</span></div>
+
+            <div style="position:relative; height:616px">
+              <span style="position:absolute; top:-7px; right:8px; font-size:12.5px; color:#A5998A">08:00</span>
+              <span style="position:absolute; top:105px; right:8px; font-size:12.5px; color:#A5998A">10:00</span>
+              <span style="position:absolute; top:217px; right:8px; font-size:12.5px; color:#A5998A">12:00</span>
+              <span style="position:absolute; top:329px; right:8px; font-size:12.5px; color:#A5998A">14:00</span>
+              <span style="position:absolute; top:441px; right:8px; font-size:12.5px; color:#A5998A">16:00</span>
+              <span style="position:absolute; top:553px; right:8px; font-size:12.5px; color:#A5998A">18:00</span>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F0E9DE; border-radius:14px; background:repeating-linear-gradient(180deg,#FDFBF7 0px,#FDFBF7 55px,#F3EDE3 55px,#F3EDE3 56px); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:56px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">09:00 · Sala 1</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Ana Costa · Botox</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:392px; height:80px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">15:00 · Sala 2</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; line-height:1.3">Camila Souza<br>Microagulhamento</div>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F0E9DE; border-radius:14px; background:repeating-linear-gradient(180deg,#FDFBF7 0px,#FDFBF7 55px,#F3EDE3 55px,#F3EDE3 56px); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:112px; height:80px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">10:00 · Sala 1</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; line-height:1.3">Maria Oliveira<br>Toxina botulínica</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:336px; height:52px; border-radius:10px; padding:8px 10px; background:#F7F4EE; border:1px dashed #DFD5C5">
+                <div style="font-size:12.5px; font-weight:700; color:#8A7F72">14:00 · Sala 3</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Bloqueio · Almoço</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:448px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">16:00 · Sala 2</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Carlos Santos · Limpeza</div>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #E4D6BC; border-radius:14px; background:repeating-linear-gradient(180deg,#FFFDF8 0px,#FFFDF8 55px,#F3EAD9 55px,#F3EAD9 56px); box-shadow:0 0 0 3px rgba(217,184,122,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:56px; height:80px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#EFDCB4,#DFC48C); border:1px solid #C9A96A; box-shadow:0 6px 18px rgba(169,128,63,.22)">
+                <div style="font-size:12.5px; font-weight:700; color:#6B4F1C">09:00 · Sala 2</div>
+                <div style="font-size:13.5px; font-weight:700; margin-top:2px; line-height:1.3; color:#33291A">Ana Costa<br>Preenchimento labial</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:280px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">13:00 · Sala 3</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Juliana Reis · Limpeza</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:504px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">17:00 · Sala 1</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Patrícia Lima · Avaliação</div>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F0E9DE; border-radius:14px; background:repeating-linear-gradient(180deg,#FDFBF7 0px,#FDFBF7 55px,#F3EDE3 55px,#F3EDE3 56px); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:56px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">09:00 · Sala 1</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Renata Dias · Peeling</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:224px; height:140px; border-radius:10px; padding:10px; background:rgba(169,128,63,.06); border:1.5px dashed #D9C08A; display:flex; flex-direction:column; gap:6px; align-items:flex-start; justify-content:center">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529; letter-spacing:.04em">2H30 LIVRES</div>
+                <div style="font-size:13px; color:#7A6F63; line-height:1.35">Eddy tem 6 clientes na fila de espera</div>
+                <button style="padding:5px 10px; border:0; border-radius:8px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer">Preencher</button>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F0E9DE; border-radius:14px; background:repeating-linear-gradient(180deg,#FDFBF7 0px,#FDFBF7 55px,#F3EDE3 55px,#F3EDE3 56px); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:112px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">10:00 · Sala 2</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Beatriz Alves · Botox</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:280px; height:80px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">13:00 · Sala 1</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; line-height:1.3">Fernanda Melo<br>Bioestimulador</div>
+              </div>
+              <div style="position:absolute; left:5px; right:5px; top:448px; height:52px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">16:00 · Sala 3</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Lucas Prado · Barboterapia</div>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F0E9DE; border-radius:14px; background:repeating-linear-gradient(180deg,#FDFBF7 0px,#FDFBF7 55px,#F3EDE3 55px,#F3EDE3 56px); box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="position:absolute; left:5px; right:5px; top:56px; height:108px; border-radius:10px; padding:8px 10px; background:linear-gradient(140deg,#FBF3E3,#F5E8CE); border:1px solid #E9D9B6">
+                <div style="font-size:12.5px; font-weight:700; color:#8A6529">09:00 · Sala 2</div>
+                <div style="font-size:13.5px; font-weight:600; margin-top:2px; line-height:1.3">Day spa<br>Tatiane Barros</div>
+              </div>
+            </div>
+
+            <div style="position:relative; height:616px; border:1px solid #F2EDE5; border-radius:14px; background:#F7F4EE; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <span style="font-size:13.5px; color:#B5AA9C; transform:rotate(-90deg); letter-spacing:.16em">FECHADO</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <div style="border:1px solid #EDDFC4; border-radius:18px; padding:18px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:12px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+            <div style="display:flex; align-items:center; gap:9px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path></svg>
+              <h2 style="margin:0; font-size:16px; font-weight:700; color:#5C4A2E">Otimizar a semana</h2>
+            </div>
+            <p style="margin:0; font-size:14px; line-height:1.5; color:#6E6156">Eddy encontrou 3 buracos que somam <strong style="color:#4A3F33">R$ 2.180</strong> em receita potencial.</p>
+            <button style="padding:9px; border:0; border-radius:10px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14px; font-weight:700; cursor:pointer">Preencher automaticamente</button>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:18px; display:flex; flex-direction:column; gap:14px">
+            <h2 style="margin:0; font-size:16px; font-weight:700">Fila de espera</h2>
+            <div style="display:flex; align-items:center; gap:10px">
+              <div style="width:30px; height:30px; flex:none; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700">TB</div>
+              <div style="min-width:0; flex:1"><div style="font-size:14.5px; font-weight:600">Tatiane Barros</div><div style="font-size:13px; color:#8A7F72">Limpeza · qualquer dia</div></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px">
+              <div style="width:30px; height:30px; flex:none; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700">RD</div>
+              <div style="min-width:0; flex:1"><div style="font-size:14.5px; font-weight:600">Renata Dias</div><div style="font-size:13px; color:#8A7F72">Peeling · manhãs</div></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px">
+              <div style="width:30px; height:30px; flex:none; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700">HC</div>
+              <div style="min-width:0; flex:1"><div style="font-size:14.5px; font-weight:600">Helena Cruz</div><div style="font-size:13px; color:#8A7F72">Microagulhamento · quintas</div></div>
+            </div>
+            <button style="padding:8px; border:1px solid #EAE1D3; border-radius:10px; background:#FDFBF7; font:inherit; font-size:14px; font-weight:600; color:#8A6529; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Ver os 6 da fila</button>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:18px; display:flex; flex-direction:column; gap:11px">
+            <h2 style="margin:0; font-size:16px; font-weight:700">Legenda</h2>
+            <div style="display:flex; align-items:center; gap:9px; font-size:14px; color:#6E6156"><span style="width:12px; height:12px; border-radius:4px; background:linear-gradient(140deg,#EFDCB4,#DFC48C)"></span>Selecionado</div>
+            <div style="display:flex; align-items:center; gap:9px; font-size:14px; color:#6E6156"><span style="width:12px; height:12px; border-radius:4px; background:#FBF3E3; border:1px solid #E9D9B6"></span>Agendado</div>
+            <div style="display:flex; align-items:center; gap:9px; font-size:14px; color:#6E6156"><span style="width:12px; height:12px; border-radius:4px; background:#F7F4EE; border:1px dashed #DFD5C5"></span>Bloqueio</div>
+            <div style="display:flex; align-items:center; gap:9px; font-size:14px; color:#6E6156"><span style="width:12px; height:12px; border-radius:4px; border:1.5px dashed #D9C08A"></span>Vago — IA pode preencher</div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isClientes }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:16px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 10px 22px -10px rgba(74,54,28,.18), 0 24px 44px -26px rgba(74,54,28,.24); padding:16px 18px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Clientes ativos</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px; margin-top:5px">312</div></div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:16px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 10px 22px -10px rgba(74,54,28,.18), 0 24px 44px -26px rgba(74,54,28,.24); padding:16px 18px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Novos este mês</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px; margin-top:5px">27</div></div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:16px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 10px 22px -10px rgba(74,54,28,.18), 0 24px 44px -26px rgba(74,54,28,.24); padding:16px 18px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Inativos há 90 dias</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px; margin-top:5px; color:#B04A40">23</div></div>
+          <div style="background:linear-gradient(160deg,#FDF8EE,#F7EEDC); border:1px solid #EDDFC4; border-radius:16px; padding:16px 18px; display:flex; flex-direction:column; gap:8px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+            <div style="font-size:14px; font-weight:600; color:#8A6529">Reativação por IA</div>
+            <button style="padding:7px 12px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer; align-self:flex-start">Criar campanha</button>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); overflow:hidden">
+          <div style="display:flex; align-items:center; gap:12px; padding:16px 20px; border-bottom:1px solid #F1EAE0; flex-wrap:wrap">
+            <div style="display:flex; align-items:center; gap:9px; padding:9px 13px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; flex:1; min-width:240px; max-width:380px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A5998A" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+              <input placeholder="Buscar por nome, telefone ou CPF" style="border:0; outline:0; background:transparent; font:inherit; font-size:14.5px; width:100%; color:#211C18">
+            </div>
+            <div style="display:flex; gap:7px">
+              <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; background:#F5EDE0; color:#7A5B22; cursor:pointer">Todos</span>
+              <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">VIP</span>
+              <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Em pacote</span>
+              <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Inativos</span>
+            </div>
+            <button style="margin-left:auto; padding:9px 15px; border:0; border-radius:11px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer">Nova cliente</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; padding:12px 20px; background:#FCFAF6; border-bottom:1px solid #F1EAE0; font-size:13px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#A5998A">
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Cliente</span><span>Último tratamento</span><span>Última visita</span><span>Total gasto</span><span>Risco no-show</span><span></span>
+          </div>
+
+          <div onClick="{{ goFicha }}" style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">AC</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Ana Costa</div><div style="font-size:13.5px; color:#8A7F72">(11) 98812-4407</div></div><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:2px 8px; border-radius:20px">VIP</span></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Preenchimento labial</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">Hoje</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 12.480</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#1B7A45">Baixo · 4%</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">MO</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Maria Oliveira</div><div style="font-size:13.5px; color:#8A7F72">(11) 99640-2213</div></div></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Toxina botulínica</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">12 ago 2026</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 8.900</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#1B7A45">Baixo · 7%</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#F5EDE8; color:#8A6752; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">CS</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Camila Souza</div><div style="font-size:13.5px; color:#8A7F72">(11) 97731-8890</div></div></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Microagulhamento</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">30 jul 2026</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 3.240</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#B04A40">Alto · 68%</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">JR</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Juliana Reis</div><div style="font-size:13.5px; color:#8A7F72">(11) 98120-7745</div></div><span style="font-size:12px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:2px 8px; border-radius:20px">Pacote 4/8</span></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Limpeza profunda</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">18 ago 2026</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 5.760</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#C08A2E">Médio · 31%</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">FM</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Fernanda Melo</div><div style="font-size:13.5px; color:#8A7F72">(11) 99012-3388</div></div><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:2px 8px; border-radius:20px">VIP</span></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Bioestimulador</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">05 ago 2026</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 21.150</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#1B7A45">Baixo · 3%</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1.4fr) minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr) 120px; align-items:center; padding:14px 20px; cursor:pointer" style-hover="background:#FDFBF7">
+            <div style="min-width:0; display:flex; align-items:center; gap:11px"><div style="width:36px; height:36px; border-radius:50%; background:#F5F1EA; color:#8A7F72; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">TB</div><div style="min-width:0"><div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15.5px; font-weight:600">Tatiane Barros</div><div style="font-size:13.5px; color:#8A7F72">(11) 98455-1102</div></div><span style="font-size:12px; font-weight:700; color:#B04A40; background:#FBEDEB; padding:2px 8px; border-radius:20px">Inativa</span></div>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#4A3F33">Day spa</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; color:#6E6156">14 fev 2026</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14.5px; font-weight:600">R$ 1.890</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.5px; font-weight:700; color:#8A7F72">—</span>
+            <span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; font-weight:600; color:#A9803F; text-align:right">Abrir ficha</span>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isFicha }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <button onClick="{{ goClientes }}" style="align-self:flex-start; display:flex; align-items:center; gap:7px; border:0; background:transparent; font:inherit; font-size:14.5px; font-weight:600; color:#8A7F72; cursor:pointer; padding:0" style-hover="color:#A9803F">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>Voltar para clientes
+        </button>
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; align-items:center; gap:18px; flex-wrap:wrap">
+          <div style="width:64px; height:64px; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; font-family:'Instrument Serif',serif">AC</div>
+          <div>
+            <div style="display:flex; align-items:center; gap:9px"><h2 style="margin:0; font-size:23px; font-weight:700">Ana Costa</h2><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:3px 9px; border-radius:20px">VIP</span></div>
+            <div style="font-size:14.5px; color:#8A7F72; margin-top:4px">38 anos · Cliente desde março de 2023 · (11) 98812-4407</div>
+          </div>
+          <div style="margin-left:auto; display:flex; gap:26px; align-items:center">
+            <div><div style="font-size:13px; color:#8A7F72; font-weight:600">Sessões</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:26px">31</div></div>
+            <div><div style="font-size:13px; color:#8A7F72; font-weight:600">Total gasto</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:26px">R$ 12.480</div></div>
+            <div><div style="font-size:13px; color:#8A7F72; font-weight:600">Faltas</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:26px">0</div></div>
+            <button style="padding:10px 16px; border:0; border-radius:11px; background:#1FA855; color:#fff; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l1.9-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg>Conversar</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:16px; align-items:start">
+          <div style="display:flex; flex-direction:column; gap:16px">
+
+            <div style="border:1px solid #EDDFC4; border-radius:18px; padding:20px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:11px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+              <div style="display:flex; align-items:center; gap:9px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path></svg>
+                <h3 style="margin:0; font-size:16px; font-weight:700; color:#5C4A2E">Resumo do prontuário por IA</h3>
+              </div>
+              <p style="margin:0; font-size:15px; line-height:1.6; color:#4A3F33; text-wrap:pretty">Pele mista, fototipo III, sem alergias registradas. Faz manutenção de toxina a cada 5 meses e preenchimento labial anual (0,8ml de ácido hialurônico, última aplicação hoje). Relatou leve edema por 48h nas duas últimas aplicações. Usa ácido retinoico à noite. <strong>Sugestão:</strong> a manutenção de toxina vence em 12 de outubro — bom momento para oferecer o pacote Full Face.</p>
+              <div style="display:flex; gap:8px; margin-top:2px">
+                <button style="padding:7px 13px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer">Oferecer Full Face</button>
+                <button style="padding:7px 13px; border:1px solid #E4D6BC; border-radius:9px; background:transparent; font:inherit; font-size:13.5px; font-weight:600; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">Ver prontuário completo</button>
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:16px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Histórico de sessões</h3>
+              <div style="display:flex; flex-direction:column">
+                <div style="display:flex; gap:14px; padding-bottom:16px; position:relative">
+                  <div style="width:11px; flex:none; display:flex; flex-direction:column; align-items:center"><span style="width:11px; height:11px; border-radius:50%; background:#A9803F; margin-top:4px"></span><span style="flex:1; width:1.5px; background:#EFE7DA"></span></div>
+                  <div style="flex:1"><div style="display:flex; justify-content:space-between; gap:10px"><strong style="font-size:15px">Preenchimento labial · 0,8ml</strong><span style="font-size:14px; color:#8A7F72">25 ago 2026</span></div><p style="margin:4px 0 0; font-size:14px; color:#6E6156; line-height:1.5">Dra. Sofia Martins · Sala 2 · R$ 1.850 · Produto: Restylane Kysse (lote 8842)</p></div>
+                </div>
+                <div style="display:flex; gap:14px; padding-bottom:16px">
+                  <div style="width:11px; flex:none; display:flex; flex-direction:column; align-items:center"><span style="width:11px; height:11px; border-radius:50%; background:#E0D6C6; margin-top:4px"></span><span style="flex:1; width:1.5px; background:#EFE7DA"></span></div>
+                  <div style="flex:1"><div style="display:flex; justify-content:space-between; gap:10px"><strong style="font-size:15px">Toxina botulínica · terço superior</strong><span style="font-size:14px; color:#8A7F72">12 mai 2026</span></div><p style="margin:4px 0 0; font-size:14px; color:#6E6156; line-height:1.5">Dra. Sofia Martins · Sala 1 · R$ 1.400 · 42U</p></div>
+                </div>
+                <div style="display:flex; gap:14px; padding-bottom:16px">
+                  <div style="width:11px; flex:none; display:flex; flex-direction:column; align-items:center"><span style="width:11px; height:11px; border-radius:50%; background:#E0D6C6; margin-top:4px"></span><span style="flex:1; width:1.5px; background:#EFE7DA"></span></div>
+                  <div style="flex:1"><div style="display:flex; justify-content:space-between; gap:10px"><strong style="font-size:15px">Limpeza de pele profunda</strong><span style="font-size:14px; color:#8A7F72">28 mar 2026</span></div><p style="margin:4px 0 0; font-size:14px; color:#6E6156; line-height:1.5">Carla Nogueira · Sala 3 · R$ 320</p></div>
+                </div>
+                <div style="display:flex; gap:14px">
+                  <div style="width:11px; flex:none; display:flex; justify-content:center"><span style="width:11px; height:11px; border-radius:50%; background:#E0D6C6; margin-top:4px"></span></div>
+                  <div style="flex:1"><div style="display:flex; justify-content:space-between; gap:10px"><strong style="font-size:15px">Bioestimulador de colágeno</strong><span style="font-size:14px; color:#8A7F72">09 jan 2026</span></div><p style="margin:4px 0 0; font-size:14px; color:#6E6156; line-height:1.5">Dra. Sofia Martins · Sala 1 · R$ 2.900</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:14px">
+              <div style="display:flex; align-items:center; justify-content:space-between"><h3 style="margin:0; font-size:16.5px; font-weight:700">Evolução fotográfica</h3><span style="font-size:14px; color:#8A7F72">Antes · 12 mai 2026 / Depois · 25 ago 2026</span></div>
+              <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px">
+                <div style="aspect-ratio:4/3; border-radius:13px; border:1px dashed #DFD5C5; background:#FBF8F3; display:flex; align-items:center; justify-content:center; font-size:14px; color:#A5998A">Foto antes</div>
+                <div style="aspect-ratio:4/3; border-radius:13px; border:1px dashed #DFD5C5; background:#FBF8F3; display:flex; align-items:center; justify-content:center; font-size:14px; color:#A5998A">Foto depois</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:13px">
+              <h3 style="margin:0; font-size:16px; font-weight:700">Anamnese</h3>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Fototipo</span><strong>III</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Tipo de pele</span><strong>Mista</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Alergias</span><strong>Nenhuma</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Medicamentos</span><strong>Ác. retinoico</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Gestante</span><strong>Não</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Termo assinado</span><strong style="color:#1B7A45">25/08/2026</strong></div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-size:16px; font-weight:700">Financeiro</h3>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Última compra</span><strong>R$ 1.850</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Forma</span><strong>Pix · à vista</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Em aberto</span><strong style="color:#1B7A45">R$ 0</strong></div>
+              <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Ticket médio</span><strong>R$ 1.120</strong></div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:11px">
+              <h3 style="margin:0; font-size:16px; font-weight:700">Próximos passos</h3>
+              <div style="padding:12px 13px; border:1px solid #EFE7DA; border-radius:12px; font-size:14.5px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><strong>Retorno de avaliação</strong><div style="font-size:14px; color:#8A7F72; margin-top:3px">08 set 2026 · 10:00</div></div>
+              <div style="padding:12px 13px; border:1px solid #EFE7DA; border-radius:12px; font-size:14.5px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><strong>Manutenção de toxina</strong><div style="font-size:14px; color:#8A7F72; margin-top:3px">Vence em 12 out 2026</div></div>
+              <button style="padding:9px; border:1px solid #EAE1D3; border-radius:10px; background:#FDFBF7; font:inherit; font-size:14px; font-weight:600; color:#8A6529; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Agendar retorno</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isWhats }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:296px minmax(0,1fr) 288px; gap:16px; align-items:stretch; height:calc(100vh - 190px); min-height:620px">
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); display:flex; flex-direction:column; overflow:hidden">
+          <div style="padding:16px; border-bottom:1px solid #F1EAE0; display:flex; flex-direction:column; gap:12px">
+            <div style="display:flex; align-items:center; gap:9px; padding:9px 12px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A5998A" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+              <input placeholder="Buscar conversa" style="border:0; outline:0; background:transparent; font:inherit; font-size:14.5px; width:100%">
+            </div>
+            <div style="display:flex; gap:6px">
+              <span style="font-size:13px; font-weight:700; padding:6px 11px; border-radius:20px; background:#F5EDE0; color:#7A5B22; cursor:pointer">Aguardando você 4</span>
+              <span style="font-size:13px; font-weight:600; padding:6px 11px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">IA 27</span>
+              <span style="font-size:13px; font-weight:600; padding:6px 11px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Todas</span>
+            </div>
+          </div>
+          <div style="flex:1; overflow-y:auto">
+            <div style="display:flex; gap:11px; padding:14px 16px; border-bottom:1px solid #F5F0E8; background:linear-gradient(120deg,#F9F1E2,#F5EAD6); cursor:pointer">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">AC</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Ana Costa</strong><span style="font-size:12.5px; color:#8A7F72">09:41</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Consigo remarcar pra quinta à tarde?</p>
+                <span style="display:inline-block; margin-top:5px; font-size:12px; font-weight:700; color:#B04A40; background:#FBEDEB; padding:2px 7px; border-radius:20px">Precisa de você</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:11px; padding:14px 16px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">MO</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Maria Oliveira</strong><span style="font-size:12.5px; color:#8A7F72">09:12</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Eddy: Agendado para 26/08 às 10h ✓</p>
+                <span style="display:inline-block; margin-top:5px; font-size:12px; font-weight:700; color:#1B7A45; background:#EDF7F0; padding:2px 7px; border-radius:20px">Resolvido pela IA</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:11px; padding:14px 16px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#F5EDE8; color:#8A6752; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">CS</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Camila Souza</strong><span style="font-size:12.5px; color:#8A7F72">08:55</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Eddy: Confirma sua sessão de hoje às 15h?</p>
+                <span style="display:inline-block; margin-top:5px; font-size:12px; font-weight:700; color:#C08A2E; background:#FBF3E3; padding:2px 7px; border-radius:20px">Sem resposta · 2 lembretes</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:11px; padding:14px 16px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">JR</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Juliana Reis</strong><span style="font-size:12.5px; color:#8A7F72">Ontem</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Quanto fica o pacote de 8 limpezas?</p>
+                <span style="display:inline-block; margin-top:5px; font-size:12px; font-weight:700; color:#B04A40; background:#FBEDEB; padding:2px 7px; border-radius:20px">Precisa de você</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:11px; padding:14px 16px; border-bottom:1px solid #F5F0E8; cursor:pointer" style-hover="background:#FDFBF7">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#F5F1EA; color:#8A7F72; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">TB</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Tatiane Barros</strong><span style="font-size:12.5px; color:#8A7F72">Ontem</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Eddy: Sentimos sua falta! Que tal 15% off…</p>
+                <span style="display:inline-block; margin-top:5px; font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:2px 7px; border-radius:20px">Campanha de reativação</span>
+              </div>
+            </div>
+            <div style="display:flex; gap:11px; padding:14px 16px; cursor:pointer" style-hover="background:#FDFBF7">
+              <div style="width:38px; height:38px; flex:none; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">LP</div>
+              <div style="min-width:0; flex:1">
+                <div style="display:flex; justify-content:space-between; gap:8px"><strong style="font-size:15px">Lucas Prado</strong><span style="font-size:12.5px; color:#8A7F72">Seg</span></div>
+                <p style="margin:3px 0 0; font-size:14px; color:#6E6156; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Eddy: Sua barboterapia está confirmada ✓</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); display:flex; flex-direction:column; overflow:hidden; min-width:0">
+          <div style="padding:15px 20px; border-bottom:1px solid #F1EAE0; display:flex; align-items:center; gap:12px">
+            <div style="width:38px; height:38px; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700">AC</div>
+            <div><div style="font-size:16px; font-weight:700">Ana Costa</div><div style="font-size:13.5px; color:#8A7F72">(11) 98812-4407 · online agora</div></div>
+            <div style="margin-left:auto; display:flex; align-items:center; gap:10px">
+              <div style="display:flex; align-items:center; gap:8px; padding:7px 12px; border-radius:20px; background:#FBF3E3; border:1px solid #EDDFC4; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+                <span style="width:6px; height:6px; border-radius:50%; background:#A9803F"></span>
+                <span style="font-size:13px; font-weight:700; color:#7A5B22">Eddy no controle</span>
+              </div>
+              <button style="padding:8px 14px; border:1px solid #EAE1D3; border-radius:10px; background:#fff; font:inherit; font-size:14px; font-weight:700; color:#B04A40; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#E6BBB5; background:#FDF6F5">Assumir conversa</button>
+            </div>
+          </div>
+
+          <div style="flex:1; overflow-y:auto; padding:22px 24px; display:flex; flex-direction:column; gap:12px; background:#FCFAF6">
+            <div style="align-self:center; font-size:13px; color:#A5998A; background:#F3EDE3; padding:4px 12px; border-radius:20px">Hoje</div>
+
+            <div style="align-self:flex-start; max-width:70%; background:#fff; border:1px solid #EFE7DA; border-radius:14px 14px 14px 4px; padding:11px 14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <p style="margin:0; font-size:15px; line-height:1.5">Oi! Tudo bem? Consigo remarcar meu preenchimento pra quinta à tarde?</p>
+              <div style="font-size:12px; color:#A5998A; margin-top:5px">09:38</div>
+            </div>
+
+            <div style="align-self:flex-end; max-width:70%; background:linear-gradient(150deg,#F7EEDC,#F1E2C4); border:1px solid #E9DBBE; border-radius:14px 14px 4px 14px; padding:11px 14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path></svg><span style="font-size:12px; font-weight:700; color:#8A6529; letter-spacing:.04em">EDDY</span></div>
+              <p style="margin:0; font-size:15px; line-height:1.5; color:#33291A">Oi Ana, tudo ótimo! Deixa eu ver a agenda da Dra. Sofia pra quinta 😊</p>
+              <div style="font-size:12px; color:#9C8B6B; margin-top:5px">09:38 ✓✓</div>
+            </div>
+
+            <div style="align-self:flex-end; max-width:70%; background:linear-gradient(150deg,#F7EEDC,#F1E2C4); border:1px solid #E9DBBE; border-radius:14px; padding:11px 14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <p style="margin:0; font-size:15px; line-height:1.5; color:#33291A">Quinta (28/08) eu tenho <strong>14h30</strong> e <strong>16h00</strong> na Sala 2, ambos com a Dra. Sofia. Qual prefere?</p>
+              <div style="font-size:12px; color:#9C8B6B; margin-top:5px">09:39 ✓✓</div>
+            </div>
+
+            <div style="align-self:flex-start; max-width:70%; background:#fff; border:1px solid #EFE7DA; border-radius:14px; padding:11px 14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <p style="margin:0; font-size:15px; line-height:1.5">14h30 é perfeito. Mas queria aproveitar e fazer a toxina junto, dá?</p>
+              <div style="font-size:12px; color:#A5998A; margin-top:5px">09:41</div>
+            </div>
+
+            <div style="align-self:center; max-width:88%; background:#FBF6EC; border:1.5px dashed #E3D2B0; border-radius:14px; padding:13px 15px">
+              <div style="display:flex; align-items:center; gap:7px; margin-bottom:7px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L2.4 17a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg><span style="font-size:12.5px; font-weight:700; color:#8A6529; letter-spacing:.04em">EDDY PAROU E CHAMOU VOCÊ</span></div>
+              <p style="margin:0 0 10px; font-size:14.5px; line-height:1.5; color:#4A3F33">Ana pediu para combinar preenchimento + toxina na mesma sessão. Isso muda a duração para 90 min e o valor para R$ 3.250. Confirmo com ela?</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap">
+                <button style="padding:7px 13px; border:0; border-radius:9px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:13.5px; font-weight:700; cursor:pointer">Sim, pode confirmar</button>
+                <button style="padding:7px 13px; border:1px solid #E4D6BC; border-radius:9px; background:#fff; font:inherit; font-size:13.5px; font-weight:600; color:#6E6156; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">Eu respondo</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:14px 20px; border-top:1px solid #F1EAE0; display:flex; align-items:center; gap:10px">
+            <input placeholder="Escreva uma mensagem — ou deixe o Eddy responder" style="flex:1; border:1px solid #EAE1D3; outline:0; background:#FDFBF7; border-radius:12px; padding:11px 14px; font:inherit; font-size:14.5px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+            <button style="padding:11px 16px; border:0; border-radius:12px; background:#1FA855; color:#fff; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer">Enviar</button>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px; overflow-y:auto">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:18px; display:flex; flex-direction:column; gap:12px">
+            <h3 style="margin:0; font-size:16px; font-weight:700">Contexto da cliente</h3>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Próxima sessão</span><strong>Hoje, 09:00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Total gasto</span><strong>R$ 12.480</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Faltas</span><strong>0</strong></div>
+            <button onClick="{{ goFicha }}" style="padding:9px; border:1px solid #EAE1D3; border-radius:10px; background:#FDFBF7; font:inherit; font-size:14px; font-weight:600; color:#8A6529; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Abrir ficha completa</button>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:18px; display:flex; flex-direction:column; gap:11px">
+            <h3 style="margin:0; font-size:16px; font-weight:700">Respostas rápidas</h3>
+            <button style="text-align:left; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; background:#FDFBF7; font:inherit; font-size:14px; color:#4A3F33; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Enviar tabela de preços</button>
+            <button style="text-align:left; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; background:#FDFBF7; font:inherit; font-size:14px; color:#4A3F33; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Enviar orientações pré-procedimento</button>
+            <button style="text-align:left; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; background:#FDFBF7; font:inherit; font-size:14px; color:#4A3F33; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Enviar link de pagamento</button>
+            <button style="text-align:left; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; background:#FDFBF7; font:inherit; font-size:14px; color:#4A3F33; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Enviar localização da clínica</button>
+          </div>
+
+          <div style="border:1px solid #EDDFC4; border-radius:18px; padding:18px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:10px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+            <h3 style="margin:0; font-size:16px; font-weight:700; color:#5C4A2E">Eddy hoje</h3>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Mensagens respondidas</span><strong style="color:#4A3F33">86</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Agendamentos fechados</span><strong style="color:#4A3F33">7</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Passados para humano</span><strong style="color:#4A3F33">4</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Tempo médio</span><strong style="color:#4A3F33">18s</strong></div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isIA }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <div style="border:1px solid #EDDFC4; border-radius:20px; padding:26px; background:linear-gradient(140deg,#FDF8EE 0%,#F7EEDC 55%,#F2E5CB 100%); display:flex; align-items:center; gap:24px; flex-wrap:wrap; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+          <div style="width:58px; height:58px; flex:none; border-radius:18px; background:linear-gradient(150deg,#E4C88C,#A9803F); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(169,128,63,.3)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFDF7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"></path></svg>
+          </div>
+          <div style="min-width:220px">
+            <h2 style="margin:0; font-family:'Instrument Serif',serif; white-space:nowrap; font-size:28px; font-weight:400">Eddy, sua recepcionista de IA</h2>
+            <p style="margin:5px 0 0; font-size:15px; color:#6E6156; max-width:520px; line-height:1.5">Atende no WhatsApp, agenda, confirma, cobra e reativa clientes. Só chama você quando o assunto sai do combinado.</p>
+          </div>
+          <div style="margin-left:auto; display:flex; gap:30px; align-items:center">
+            <div><div style="font-size:13px; font-weight:600; color:#8A7F72">Horas economizadas</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:32px; color:#5C4A2E">46h</div></div>
+            <div><div style="font-size:13px; font-weight:600; color:#8A7F72">Receita gerada</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:32px; color:#5C4A2E">R$ 19.4k</div></div>
+            <div><div style="font-size:13px; font-weight:600; color:#8A7F72">Resolvido sem humano</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:32px; color:#5C4A2E">78%</div></div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:16px; align-items:start">
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:14px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Automações</h3>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Agendar e remarcar sozinha</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Consulta a agenda real, oferece horários e fecha o agendamento no WhatsApp.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">312 este mês</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Responder dúvidas 24/7</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Preços, cuidados pré e pós, endereço, formas de pagamento e indicações.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">1.840 respostas</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Preencher buracos na agenda</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Detecta janelas vazias e convida a fila de espera por ordem de prioridade.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">34 encaixes</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Prever risco de no-show</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Pontua cada agendamento e reforça a confirmação de quem tem risco alto.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">Faltas −41%</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Recomendar tratamentos e upsell</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Sugere o próximo procedimento a partir do histórico e do intervalo ideal.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">R$ 7.1k</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Resumir prontuário antes do atendimento</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Manda um resumo de 30 segundos para a profissional antes de cada sessão.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">Ativo</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; opacity:.62; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Campanhas de reativação</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Convida quem não volta há 90 dias com oferta aprovada por você.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#8A7F72">Pausada</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:#E4DACA; padding:3px; display:flex; justify-content:flex-start; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:14px; padding:15px 16px; border:1px solid #EFE7DA; border-radius:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="flex:1"><div style="font-size:15.5px; font-weight:600">Cobrar pagamentos em aberto</div><p style="margin:3px 0 0; font-size:14px; color:#8A7F72; line-height:1.45">Envia link de pagamento e lembretes gentis de parcelas atrasadas.</p></div>
+              <span style="font-size:13px; font-weight:700; color:#1B7A45">R$ 4.3k recuperados</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Personalidade e tom</h3>
+              <div style="display:flex; gap:7px; flex-wrap:wrap">
+                <span style="font-size:13.5px; font-weight:700; padding:7px 13px; border-radius:20px; background:#F5EDE0; color:#7A5B22; cursor:pointer">Acolhedor</span>
+                <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Técnico</span>
+                <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Direto</span>
+                <span style="font-size:13.5px; font-weight:600; padding:7px 13px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Luxo</span>
+              </div>
+              <label style="display:flex; flex-direction:column; gap:6px; font-size:14px; font-weight:600; color:#8A7F72">Instruções da casa
+                <textarea style="font:inherit; font-size:14.5px; line-height:1.5; color:#4A3F33; padding:11px 13px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; min-height:96px; resize:vertical; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">Chame a cliente pelo primeiro nome. Nunca prometa resultado. Não passe preço de bioestimulador sem avaliação. Se perguntarem sobre gravidez ou uso de isotretinoína, transfira para a Dra. Sofia.</textarea>
+              </label>
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Usar emojis</span><div style="width:44px; height:25px; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div></div>
+              <div style="display:flex; align-items:center; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Responder fora do horário</span><div style="width:44px; height:25px; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div></div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Base de conhecimento</h3>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:8px; height:8px; border-radius:50%; background:#1FA855"></span>Tabela de preços 2026<span style="margin-left:auto; font-size:13px; color:#8A7F72">24 itens</span></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:8px; height:8px; border-radius:50%; background:#1FA855"></span>Cuidados pré e pós<span style="margin-left:auto; font-size:13px; color:#8A7F72">18 textos</span></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:8px; height:8px; border-radius:50%; background:#1FA855"></span>Políticas de cancelamento<span style="margin-left:auto; font-size:13px; color:#8A7F72">1 doc</span></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:8px; height:8px; border-radius:50%; background:#C08A2E"></span>Contraindicações<span style="margin-left:auto; font-size:13px; color:#C08A2E">revisar</span></div>
+              <button style="padding:9px; border:1px dashed #DFD5C5; border-radius:11px; background:#FDFBF7; font:inherit; font-size:14px; font-weight:600; color:#8A6529; cursor:pointer" style-hover="border-color:#D9C9AC">Adicionar documento</button>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:12px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Quando chamar um humano</h3>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; color:#4A3F33"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>Reclamação ou insatisfação</div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; color:#4A3F33"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>Dúvida clínica ou intercorrência</div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; color:#4A3F33"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>Pedido de desconto acima de 10%</div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; color:#4A3F33"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>Combinação de procedimentos na mesma sessão</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isFinanceiro }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Receita de agosto</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:34px; margin-top:6px">R$ 68.420</div><div style="font-size:13.5px; color:#1B7A45; font-weight:600; margin-top:4px">+14% vs. julho</div></div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Despesas</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:34px; margin-top:6px">R$ 24.180</div><div style="font-size:13.5px; color:#8A7F72; margin-top:4px">Insumos, aluguel, equipe</div></div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px"><div style="font-size:14px; font-weight:600; color:#8A7F72">Lucro líquido</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:34px; margin-top:6px; color:#1B7A45">R$ 44.240</div><div style="font-size:13.5px; color:#8A7F72; margin-top:4px">Margem de 64,6%</div></div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px"><div style="font-size:14px; font-weight:600; color:#8A7F72">A receber</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:34px; margin-top:6px; color:#B04A40">R$ 6.310</div><div style="font-size:13.5px; color:#8A7F72; margin-top:4px">9 parcelas · 2 atrasadas</div></div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:16px; align-items:start">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); overflow:hidden">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid #F1EAE0">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Movimentações recentes</h3>
+              <button style="padding:8px 14px; border:1px solid #EAE1D3; border-radius:10px; background:#FDFBF7; font:inherit; font-size:14px; font-weight:600; color:#8A6529; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Exportar</button>
+            </div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); padding:12px 20px; background:#FCFAF6; border-bottom:1px solid #F1EAE0; font-size:13px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:#A5998A"><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Cliente</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Procedimento</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Pagamento</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Valor</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">Status</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Ana Costa</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Preenchimento</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Pix</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 1.850</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#1B7A45">Pago</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Fernanda Melo</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Bioestimulador</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Cartão 3x</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 2.900</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#C08A2E">1/3 pago</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Juliana Reis</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Pacote limpeza</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Cartão 8x</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 2.240</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#C08A2E">4/8 pago</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Camila Souza</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Microagulhamento</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Boleto</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 680</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#B04A40">Atrasado 12d</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; border-bottom:1px solid #F5F0E8; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Maria Oliveira</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Toxina</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Pix</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 1.400</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#1B7A45">Pago</span></div>
+            <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,.9fr); align-items:center; padding:14px 20px; font-size:14.5px"><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600">Lucas Prado</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Barboterapia</span><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6E6156">Dinheiro</span><strong style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">R$ 180</strong><span style="min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; color:#1B7A45">Pago</span></div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px">
+            <div style="border:1px solid #EDDFC4; border-radius:18px; padding:20px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:11px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+              <div style="display:flex; align-items:center; gap:9px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path></svg><h3 style="margin:0; font-size:16px; font-weight:700; color:#5C4A2E">Cobrança automática</h3></div>
+              <p style="margin:0; font-size:14.5px; line-height:1.5; color:#4A3F33">2 clientes com parcela vencida somando <strong>R$ 1.060</strong>. Eddy pode enviar o link de pagamento com lembrete gentil.</p>
+              <button style="padding:9px; border:0; border-radius:10px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14px; font-weight:700; cursor:pointer">Enviar cobranças</button>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Comissões de agosto</h3>
+              <div style="display:flex; align-items:center; gap:11px"><div style="width:32px; height:32px; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700">SM</div><div style="flex:1"><div style="font-size:15px; font-weight:600">Dra. Sofia Martins</div><div style="font-size:13px; color:#8A7F72">30% · 38 procedimentos</div></div><strong style="font-size:15px">R$ 14.220</strong></div>
+              <div style="display:flex; align-items:center; gap:11px"><div style="width:32px; height:32px; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700">CN</div><div style="flex:1"><div style="font-size:15px; font-weight:600">Carla Nogueira</div><div style="font-size:13px; color:#8A7F72">25% · 52 procedimentos</div></div><strong style="font-size:15px">R$ 5.980</strong></div>
+              <div style="display:flex; align-items:center; gap:11px"><div style="width:32px; height:32px; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700">BT</div><div style="flex:1"><div style="font-size:15px; font-weight:600">Bruno Tavares</div><div style="font-size:13px; color:#8A7F72">25% · 19 procedimentos</div></div><strong style="font-size:15px">R$ 2.140</strong></div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:13px">
+              <h3 style="margin:0; font-size:16.5px; font-weight:700">Formas de pagamento</h3>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:52px; color:#8A7F72">Pix</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:46%; height:100%; background:linear-gradient(90deg,#D9B87A,#A9803F)"></div></div><strong style="width:38px; text-align:right">46%</strong></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:52px; color:#8A7F72">Cartão</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:38%; height:100%; background:linear-gradient(90deg,#E7D6B6,#C9A96A)"></div></div><strong style="width:38px; text-align:right">38%</strong></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:52px; color:#8A7F72">Boleto</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:11%; height:100%; background:#EFE3CC"></div></div><strong style="width:38px; text-align:right">11%</strong></div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:52px; color:#8A7F72">Dinheiro</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:5%; height:100%; background:#EFE3CC"></div></div><strong style="width:38px; text-align:right">5%</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isTratamentos }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+          <span style="font-size:13.5px; font-weight:700; padding:8px 14px; border-radius:20px; background:#F5EDE0; color:#7A5B22; cursor:pointer">Todos</span>
+          <span style="font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; background:#fff; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Injetáveis</span>
+          <span style="font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; background:#fff; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Facial</span>
+          <span style="font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; background:#fff; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Corporal</span>
+          <span style="font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:20px; border:1px solid #EAE1D3; color:#8A7F72; background:#fff; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)" style-hover="border-color:#D9C9AC">Pacotes</span>
+          <button style="margin-left:auto; padding:9px 15px; border:0; border-radius:11px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer">Novo tratamento</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px" style-hover="border-color:#D9C9AC">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700">Toxina botulínica</h3><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:3px 9px; border-radius:20px; white-space:nowrap">Injetável</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px">R$ 1.400</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>45 min</span><span>Retorno 5 meses</span></div>
+            <div style="border-top:1px solid #F1EAE0; padding-top:12px; display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Margem</span><strong style="color:#1B7A45">72%</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Vendidos em agosto</span><strong>18</strong></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px" style-hover="border-color:#D9C9AC">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700">Preenchimento labial</h3><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:3px 9px; border-radius:20px; white-space:nowrap">Injetável</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px">R$ 1.850</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>60 min</span><span>Retorno 12 meses</span></div>
+            <div style="border-top:1px solid #F1EAE0; padding-top:12px; display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Margem</span><strong style="color:#1B7A45">64%</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Vendidos em agosto</span><strong>11</strong></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px" style-hover="border-color:#D9C9AC">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700">Bioestimulador de colágeno</h3><span style="font-size:12px; font-weight:700; color:#7A5B22; background:#F5EDE0; padding:3px 9px; border-radius:20px; white-space:nowrap">Injetável</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px">R$ 2.900</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>75 min</span><span>3 sessões</span></div>
+            <div style="border-top:1px solid #F1EAE0; padding-top:12px; display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Margem</span><strong style="color:#1B7A45">58%</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Vendidos em agosto</span><strong>7</strong></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px" style-hover="border-color:#D9C9AC">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700">Limpeza de pele profunda</h3><span style="font-size:12px; font-weight:700; color:#5A6A82; background:#EDF0F5; padding:3px 9px; border-radius:20px; white-space:nowrap">Facial</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px">R$ 320</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>90 min</span><span>Retorno 30 dias</span></div>
+            <div style="border-top:1px solid #F1EAE0; padding-top:12px; display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Margem</span><strong style="color:#1B7A45">81%</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Vendidos em agosto</span><strong>46</strong></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px" style-hover="border-color:#D9C9AC">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700">Microagulhamento</h3><span style="font-size:12px; font-weight:700; color:#5A6A82; background:#EDF0F5; padding:3px 9px; border-radius:20px; white-space:nowrap">Facial</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px">R$ 680</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>60 min</span><span>4 sessões</span></div>
+            <div style="border-top:1px solid #F1EAE0; padding-top:12px; display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Margem</span><strong style="color:#1B7A45">76%</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px"><span style="color:#8A7F72">Vendidos em agosto</span><strong>22</strong></div>
+          </div>
+          <div style="border:1px solid #EDDFC4; border-radius:18px; padding:20px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px"><h3 style="margin:0; font-size:17.5px; font-weight:700; color:#5C4A2E">Pacote Full Face</h3><span style="font-size:12px; font-weight:700; color:#7A5B22; background:rgba(255,255,255,.7); padding:3px 9px; border-radius:20px; white-space:nowrap">Pacote</span></div>
+            <div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:30px; color:#5C4A2E">R$ 4.900</div>
+            <div style="display:flex; gap:18px; font-size:14px; color:#8A7F72"><span>Toxina + preenchimento</span></div>
+            <p style="margin:0; font-size:14px; line-height:1.5; color:#6E6156">Eddy identificou <strong style="color:#4A3F33">14 clientes</strong> com perfil ideal para este pacote neste trimestre.</p>
+            <button style="padding:8px; border:0; border-radius:10px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14px; font-weight:700; cursor:pointer">Ver lista</button>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isRelatorios }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:16px">
+
+        <div style="border:1px solid #EDDFC4; border-radius:18px; padding:22px; background:linear-gradient(160deg,#FDF8EE,#F7EEDC); display:flex; flex-direction:column; gap:14px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">
+          <div style="display:flex; align-items:center; gap:9px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#A9803F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.7 4.8 4.8 1.7-4.8 1.7L12 16.5l-1.7-4.8L5.5 10l4.8-1.7z"></path></svg><h2 style="margin:0; font-size:16.5px; font-weight:700; color:#5C4A2E">Pergunte ao Eddy</h2></div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <input value="Qual profissional mais fatura por hora de sala?" style="flex:1; min-width:280px; border:1px solid #E4D6BC; outline:0; background:rgba(255,255,255,.8); border-radius:12px; padding:12px 15px; font:inherit; font-size:15px; color:#33291A; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+            <button style="padding:12px 20px; border:0; border-radius:12px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:14.5px; font-weight:700; cursor:pointer">Gerar relatório</button>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <span style="font-size:13.5px; padding:6px 12px; border-radius:20px; background:rgba(255,255,255,.65); border:1px solid #EFE3CC; color:#6E6156; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">Quais tratamentos dão mais margem?</span>
+            <span style="font-size:13.5px; padding:6px 12px; border-radius:20px; background:rgba(255,255,255,.65); border:1px solid #EFE3CC; color:#6E6156; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">Quantas clientes voltaram em 90 dias?</span>
+            <span style="font-size:13.5px; padding:6px 12px; border-radius:20px; background:rgba(255,255,255,.65); border:1px solid #EFE3CC; color:#6E6156; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 12px 26px -12px rgba(74,54,28,.18), 0 32px 60px -30px rgba(74,54,28,.26)">Qual o custo real de uma falta?</span>
+          </div>
+        </div>
+
+        <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:16px">
+          <div style="display:flex; align-items:center; gap:9px"><span style="font-size:12.5px; font-weight:700; letter-spacing:.06em; color:#8A6529; background:#F8F1E2; padding:3px 9px; border-radius:20px">RESPOSTA DO EDDY</span></div>
+          <p style="margin:0; font-size:16px; line-height:1.65; color:#33291A; max-width:74ch; text-wrap:pretty">A Dra. Sofia fatura <strong>R$ 486 por hora de sala</strong>, contra R$ 214 da Carla e R$ 178 do Bruno. A diferença vem quase toda dos injetáveis: 68% da agenda da Sofia é toxina e preenchimento, procedimentos de 45 a 60 minutos com ticket acima de R$ 1.400. A Carla concentra limpezas de 90 minutos a R$ 320 — margem alta, mas ocupa sala por muito tempo. Se você mover duas limpezas por dia da Sala 2 para a Sala 3 e abrir esses horários para injetáveis, a projeção é de <strong>+R$ 9.200 por mês</strong> sem contratar ninguém.</p>
+          <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; border-top:1px solid #F1EAE0; padding-top:18px">
+            <div><div style="font-size:14px; color:#8A7F72; font-weight:600">Dra. Sofia Martins</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:28px; margin-top:3px">R$ 486/h</div><div style="height:6px; border-radius:6px; background:#F1EAE0; margin-top:8px; overflow:hidden"><div style="width:100%; height:100%; background:linear-gradient(90deg,#D9B87A,#A9803F)"></div></div></div>
+            <div><div style="font-size:14px; color:#8A7F72; font-weight:600">Carla Nogueira</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:28px; margin-top:3px">R$ 214/h</div><div style="height:6px; border-radius:6px; background:#F1EAE0; margin-top:8px; overflow:hidden"><div style="width:44%; height:100%; background:#E7D6B6"></div></div></div>
+            <div><div style="font-size:14px; color:#8A7F72; font-weight:600">Bruno Tavares</div><div style="font-family:'Instrument Serif',serif; white-space:nowrap; font-size:28px; margin-top:3px">R$ 178/h</div><div style="height:6px; border-radius:6px; background:#F1EAE0; margin-top:8px; overflow:hidden"><div style="width:37%; height:100%; background:#EFE3CC"></div></div></div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:16px">
+            <h3 style="margin:0; font-size:16.5px; font-weight:700">Faturamento por mês</h3>
+            <div style="display:flex; align-items:flex-end; gap:9px; height:130px">
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:7px"><div style="width:100%; height:52%; border-radius:7px; background:#F0E6D4"></div><span style="font-size:12px; color:#8A7F72">Abr</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:7px"><div style="width:100%; height:61%; border-radius:7px; background:#EFE3CC"></div><span style="font-size:12px; color:#8A7F72">Mai</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:7px"><div style="width:100%; height:57%; border-radius:7px; background:#F0E6D4"></div><span style="font-size:12px; color:#8A7F72">Jun</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:7px"><div style="width:100%; height:74%; border-radius:7px; background:#E7D6B6"></div><span style="font-size:12px; color:#8A7F72">Jul</span></div>
+              <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:7px"><div style="width:100%; height:92%; border-radius:7px; background:linear-gradient(180deg,#D9B87A,#A9803F)"></div><span style="font-size:12px; font-weight:700; color:#8A6529">Ago</span></div>
+            </div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:14px">
+            <h3 style="margin:0; font-size:16.5px; font-weight:700">Origem das clientes</h3>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:78px; color:#8A7F72">Indicação</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:41%; height:100%; background:linear-gradient(90deg,#D9B87A,#A9803F)"></div></div><strong style="width:34px; text-align:right">41%</strong></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:78px; color:#8A7F72">Instagram</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:29%; height:100%; background:#E7D6B6"></div></div><strong style="width:34px; text-align:right">29%</strong></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:78px; color:#8A7F72">Google</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:19%; height:100%; background:#EFE3CC"></div></div><strong style="width:34px; text-align:right">19%</strong></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px"><span style="width:78px; color:#8A7F72">Passagem</span><div style="flex:1; height:8px; border-radius:8px; background:#F1EAE0; overflow:hidden"><div style="width:11%; height:100%; background:#EFE3CC"></div></div><strong style="width:34px; text-align:right">11%</strong></div>
+          </div>
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:20px; display:flex; flex-direction:column; gap:13px">
+            <h3 style="margin:0; font-size:16.5px; font-weight:700">Relatórios salvos</h3>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Fechamento mensal<span style="margin-left:auto; font-size:13px; color:#8A7F72">PDF</span></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Produtividade por sala<span style="margin-left:auto; font-size:13px; color:#8A7F72">PDF</span></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Retenção de clientes<span style="margin-left:auto; font-size:13px; color:#8A7F72">CSV</span></div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:14.5px; padding:10px 12px; border:1px solid #EFE7DA; border-radius:11px; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC">Estoque de insumos<span style="margin-left:auto; font-size:13px; color:#8A7F72">CSV</span></div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isConfig }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr); gap:16px; align-items:start">
+
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:18px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Personalização da marca</h3>
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:22px">
+              <div style="display:flex; flex-direction:column; gap:9px">
+                <span style="font-size:14px; font-weight:600; color:#8A7F72">Logotipo da clínica</span>
+                <div style="border:1.5px dashed #DFD5C5; border-radius:14px; background:#FCFAF6; min-height:130px; display:flex; align-items:center; justify-content:center">
+                  <button style="display:flex; align-items:center; gap:8px; padding:10px 16px; border:1px solid #EAE1D3; border-radius:11px; background:#fff; font:inherit; font-size:14px; font-weight:600; color:#6E6156; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC; color:#A9803F"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"></path></svg>Upload arquivo</button>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:16px">
+                <div style="display:flex; flex-direction:column; gap:9px">
+                  <span style="font-size:14px; font-weight:600; color:#8A7F72">Cor primária</span>
+                  <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px">
+                    <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border:1.5px solid #C9A96A; border-radius:11px; background:#FDFBF7"><span style="width:22px; height:22px; border-radius:6px; background:#A9803F"></span><span style="font-size:14px; font-weight:600">#A9803F</span></div>
+                    <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC"><span style="width:22px; height:22px; border-radius:6px; background:#D9B87A"></span><span style="font-size:14px; font-weight:600">#D9B87A</span></div>
+                  </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:9px">
+                  <span style="font-size:14px; font-weight:600; color:#8A7F72">Cor secundária</span>
+                  <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px">
+                    <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC"><span style="width:22px; height:22px; border-radius:6px; background:#F6F2EC; border:1px solid #E4DACA"></span><span style="font-size:14px; font-weight:600">#F6F2EC</span></div>
+                    <div style="display:flex; align-items:center; gap:9px; padding:8px 11px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; cursor:pointer; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)" style-hover="border-color:#D9C9AC"><span style="width:22px; height:22px; border-radius:6px; background:#211C18"></span><span style="font-size:14px; font-weight:600">#211C18</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:14px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Gestão de equipe e permissões</h3>
+            <div style="display:flex; align-items:center; gap:13px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:13px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="width:36px; height:36px; flex:none; border-radius:50%; background:#F3EAF0; color:#8A5A73; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">SM</div>
+              <div style="flex:1"><div style="font-size:15px; font-weight:600">Dra. Sofia Martins</div><div style="font-size:13.5px; color:#8A7F72">Administradora</div></div>
+              <span style="font-size:14px; color:#6E6156">Permissões totais</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:13px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:13px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="width:36px; height:36px; flex:none; border-radius:50%; background:#EDF0F5; color:#5A6A82; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">RS</div>
+              <div style="flex:1"><div style="font-size:15px; font-weight:600">Renata Souza</div><div style="font-size:13.5px; color:#8A7F72">Recepcionista</div></div>
+              <span style="font-size:14px; color:#6E6156">Agenda, clientes e WhatsApp</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:13px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:13px; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="width:36px; height:36px; flex:none; border-radius:50%; background:#EFF2EC; color:#61735A; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">CN</div>
+              <div style="flex:1"><div style="font-size:15px; font-weight:600">Carla Nogueira</div><div style="font-size:13.5px; color:#8A7F72">Esteticista</div></div>
+              <span style="font-size:14px; color:#6E6156">Prontuários e tratamentos</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+            <div style="display:flex; align-items:center; gap:13px; padding:13px 15px; border:1px solid #EFE7DA; border-radius:13px; opacity:.62; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="width:36px; height:36px; flex:none; border-radius:50%; background:#F5F1EA; color:#8A7F72; display:flex; align-items:center; justify-content:center; font-size:13.5px; font-weight:700">BT</div>
+              <div style="flex:1"><div style="font-size:15px; font-weight:600">Bruno Tavares</div><div style="font-size:13.5px; color:#8A7F72">Esteticista · em férias</div></div>
+              <span style="font-size:14px; color:#6E6156">Acesso suspenso</span>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:#E4DACA; padding:3px; display:flex; justify-content:flex-start; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+            <button style="padding:11px; border:1px dashed #DFD5C5; border-radius:12px; background:#FCFAF6; font:inherit; font-size:14.5px; font-weight:600; color:#8A6529; cursor:pointer" style-hover="border-color:#D9C9AC">Adicionar novo membro</button>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:16px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Horário de funcionamento</h3>
+            <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px">
+              <div style="padding:12px 14px; border:1px solid #EFE7DA; border-radius:12px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><div style="font-size:14px; font-weight:600; color:#8A7F72">Seg a Sex</div><div style="font-size:15.5px; font-weight:600; margin-top:3px">08:00 – 19:00</div></div>
+              <div style="padding:12px 14px; border:1px solid #EFE7DA; border-radius:12px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><div style="font-size:14px; font-weight:600; color:#8A7F72">Sábado</div><div style="font-size:15.5px; font-weight:600; margin-top:3px">09:00 – 14:00</div></div>
+              <div style="padding:12px 14px; border:1px solid #EFE7DA; border-radius:12px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><div style="font-size:14px; font-weight:600; color:#8A7F72">Domingo</div><div style="font-size:15.5px; font-weight:600; margin-top:3px; color:#8A7F72">Fechado</div></div>
+              <div style="padding:12px 14px; border:1px solid #EFE7DA; border-radius:12px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)"><div style="font-size:14px; font-weight:600; color:#8A7F72">Intervalo</div><div style="font-size:15.5px; font-weight:600; margin-top:3px">12:00 – 13:00</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px">
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:18px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Integrações</h3>
+
+            <div style="display:flex; align-items:center; gap:12px; padding:14px; border:1px solid #D5EADC; border-radius:13px; background:#F7FCF9; box-shadow:0 1px 2px rgba(74,54,28,.05), 0 8px 18px -9px rgba(74,54,28,.16)">
+              <div style="width:36px; height:36px; flex:none; border-radius:11px; background:#1FA855; display:flex; align-items:center; justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l1.9-5.4A8.4 8.4 0 1 1 21 11.5z"></path></svg></div>
+              <div style="flex:1"><div style="font-size:15px; font-weight:600">WhatsApp Business API</div><div style="font-size:13.5px; color:#1B7A45">Conectado · +55 11 3344-8890</div></div>
+              <div style="width:44px; height:25px; flex:none; border-radius:20px; background:#1FA855; padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div>
+            </div>
+
+            <label style="display:flex; flex-direction:column; gap:7px; font-size:14px; font-weight:600; color:#8A7F72">Chave da API do WhatsApp
+              <div style="display:flex; align-items:center; gap:9px; padding:10px 13px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+                <span style="flex:1; font-size:14.5px; letter-spacing:.14em; color:#8A7F72">••••••••••••••</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A5998A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer"><path d="M3 3l18 18M10.6 5.1A9.6 9.6 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.1 3.9M6.2 6.2A16.7 16.7 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 4.2-.9"></path></svg>
+              </div>
+            </label>
+
+            <label style="display:flex; flex-direction:column; gap:7px; font-size:14px; font-weight:600; color:#8A7F72">Google Calendar
+              <div style="display:flex; align-items:center; gap:9px; padding:10px 13px; border:1px solid #EAE1D3; border-radius:11px; background:#FDFBF7; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 4px 10px -5px rgba(74,54,28,.14)">
+                <span style="flex:1; font-size:14.5px; letter-spacing:.14em; color:#8A7F72">••••••••••••••</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A5998A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="cursor:pointer"><path d="M3 3l18 18M10.6 5.1A9.6 9.6 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.1 3.9M6.2 6.2A16.7 16.7 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 4.2-.9"></path></svg>
+              </div>
+            </label>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Sincronização automática</span><div style="width:44px; height:25px; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Emissão de NFS-e</span><div style="width:44px; height:25px; border-radius:20px; background:linear-gradient(180deg,#D9B87A,#B78F45); padding:3px; display:flex; justify-content:flex-end; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:14.5px"><span style="color:#6E6156">Pix automático (Mercado Pago)</span><div style="width:44px; height:25px; border-radius:20px; background:#E4DACA; padding:3px; display:flex; justify-content:flex-start; cursor:pointer"><span style="width:19px; height:19px; border-radius:50%; background:#fff"></span></div></div>
+
+            <button style="padding:12px; border:0; border-radius:12px; background:linear-gradient(180deg,#D9B87A,#B78F45); color:#33291A; font:inherit; font-size:15px; font-weight:700; cursor:pointer">Salvar alterações</button>
+          </div>
+
+          <div style="background:#fff; border:1px solid #EAE1D3; border-radius:18px; box-shadow:0 1px 2px rgba(74,54,28,.06), 0 14px 28px -12px rgba(74,54,28,.2), 0 36px 64px -32px rgba(74,54,28,.3); padding:22px; display:flex; flex-direction:column; gap:13px">
+            <h3 style="margin:0; font-size:17.5px; font-weight:700">Conformidade</h3>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Termos LGPD</span><strong style="color:#1B7A45">Ativo</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Consentimento de imagem</span><strong style="color:#1B7A45">Ativo</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Backup dos prontuários</span><strong>Diário · 03:00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14.5px"><span style="color:#8A7F72">Retenção de dados</span><strong>20 anos</strong></div>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;telaInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dashboard&quot;,&quot;agenda&quot;,&quot;clientes&quot;,&quot;ficha&quot;,&quot;whats&quot;,&quot;ia&quot;,&quot;financeiro&quot;,&quot;tratamentos&quot;,&quot;relatorios&quot;,&quot;config&quot;],&quot;default&quot;:&quot;dashboard&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navegação&quot;},&quot;menuRecolhido&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navegação&quot;},&quot;mostrarStatusWhatsApp&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Cabeçalho&quot;}}">
+const PAGES = {
+  dashboard:   ["Bom dia,", "Dra. Sofia", "Terça, 25 de agosto · 14 atendimentos na casa hoje"],
+  agenda:      ["Agenda de", "Agendamentos", "Semana de 25 a 31 de agosto · 3 salas ativas"],
+  clientes:    ["Base de", "Clientes", "1.284 clientes · 312 ativos nos últimos 90 dias"],
+  ficha:       ["Ficha da", "Cliente", "Prontuário, histórico de sessões e evolução"],
+  whats:       ["WhatsApp", "Business", "Eddy atendendo · 4 conversas aguardando você"],
+  ia:          ["Central de", "Inteligência", "8 automações · Eddy trabalhou 46h por você este mês"],
+  financeiro:  ["Gestão", "Financeira", "Agosto de 2026 · fechamento em 6 dias"],
+  tratamentos: ["Catálogo de", "Tratamentos", "24 procedimentos · 6 pacotes ativos"],
+  relatorios:  ["Relatórios e", "Inteligência", "Pergunte em português, Eddy monta o relatório"],
+  config:      ["Configurações e", "Personalização", "Marca, equipe, permissões e integrações"]
+};
+
+class Component extends DCLogic {
+  state = { screen: null, collapsed: null };
+
+  go(screen) { return () => this.setState({ screen }); }
+
+  renderVals() {
+    const s = this.state.screen || this.props.telaInicial || "dashboard";
+    const collapsed = this.state.collapsed === null
+      ? (this.props.menuRecolhido ?? false)
+      : this.state.collapsed;
+    const on = (k) => ({
+      bg: s === k ? "linear-gradient(120deg,#F7EEDC,#F2E4C9)" : "transparent",
+      fg: s === k ? "#7A5B22" : "#6E6156"
+    });
+    const p = PAGES[s] || PAGES.dashboard;
+    return {
+      navW: collapsed ? "78px" : "244px",
+      labelDisp: collapsed ? "none" : "inline",
+      cardDisp: collapsed ? "none" : "flex",
+      chevron: collapsed ? "M9 6l6 6-6 6" : "M15 6l-6 6 6 6",
+      whatsChipDisp: (this.props.mostrarStatusWhatsApp ?? true) ? "flex" : "none",
+      toggleNav: () => this.setState({ collapsed: !collapsed }),
+      pageTitle: p[0], pageAccent: p[1], pageSub: p[2],
+      a: {
+        dashboard: on("dashboard"), agenda: on("agenda"),
+        clientes: (s === "ficha" ? on("ficha") : on("clientes")),
+        whats: on("whats"), ia: on("ia"), financeiro: on("financeiro"),
+        tratamentos: on("tratamentos"), relatorios: on("relatorios"), config: on("config")
+      },
+      goDashboard: this.go("dashboard"), goAgenda: this.go("agenda"),
+      goClientes: this.go("clientes"), goFicha: this.go("ficha"),
+      goWhats: this.go("whats"), goIA: this.go("ia"),
+      goFinanceiro: this.go("financeiro"), goTratamentos: this.go("tratamentos"),
+      goRelatorios: this.go("relatorios"), goConfig: this.go("config"),
+      isDashboard: s === "dashboard", isAgenda: s === "agenda",
+      isClientes: s === "clientes", isFicha: s === "ficha",
+      isWhats: s === "whats", isIA: s === "ia",
+      isFinanceiro: s === "financeiro", isTratamentos: s === "tratamentos",
+      isRelatorios: s === "relatorios", isConfig: s === "config"
+    };
+  }
+}
+
+</script>
+</body>
+</html>

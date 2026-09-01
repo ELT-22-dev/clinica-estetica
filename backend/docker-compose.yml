@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: clinica
+      POSTGRES_PASSWORD: clinica
+      POSTGRES_DB: clinica_estetica
+    ports:
+      - "5432:5432"
+    volumes:
+      - clinica_estetica_pgdata:/var/lib/postgresql/data
+
+volumes:
+  clinica_estetica_pgdata:
